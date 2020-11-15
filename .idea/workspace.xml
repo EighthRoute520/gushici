@@ -20,21 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fbbad12-6885-4eae-9ac8-52e830b5dea4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/AuthController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/AuthController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/BaseController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/BaseController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/servers/InfoListServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/InfoListServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/admin/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/admin/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/api/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/api/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/infoClass/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/infoClass/add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/infoClass/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/infoClass/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/login/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/role/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/role/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/ucAdmin/add.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/ucAdmin/edit.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/ucAdmin/list.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
