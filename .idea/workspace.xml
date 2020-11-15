@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="2fbbad12-6885-4eae-9ac8-52e830b5dea4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/AdminController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/AdminController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/AdsController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/AdsController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/ApiController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/ApiController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/AuthController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/AuthController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/BaseController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/BaseController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/CodeController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/CodeController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/EnvController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/EnvController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/ErrorController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/ErrorController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/GroupController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/GroupController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/HomeController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/HomeController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/InfoClassController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/InfoClassController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/InfoListController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/InfoListController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/LoginController.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/LoginController.go" afterDir="false" />
@@ -21,18 +36,17 @@
       <change beforePath="$PROJECT_DIR$/models/ApiDetailModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/ApiDetailModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/ApiParamModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/ApiParamModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/ApiSourceModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/ApiSourceModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/InfoClassModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/InfoClassModel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/DatabaseInit.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/DatabaseInit.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/InfoIdiomModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/InfoIdiomModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/InfoListModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/InfoListModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/InfoTagModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/InfoTagModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/SetCodeModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/SetCodeModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/SetEnvModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/SetEnvModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/SetGroupModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/SetGroupModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/UcAdminModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/UcAdminModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/UcAuthModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/UcAuthModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/UcRoleAuthModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/UcRoleAuthModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/UcRoleModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/UcRoleModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/UserInfoModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/UserInfoModel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/UserInfoModel.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routers/router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/servers/AdminServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/AdminServer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/servers/ApiDetailServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/ApiDetailServer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/servers/ApiParamServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/ApiParamServer.go" afterDir="false" />
@@ -46,6 +60,13 @@
       <change beforePath="$PROJECT_DIR$/servers/RoleAuthServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/RoleAuthServer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/servers/RoleServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/RoleServer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/servers/SetGroupServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/servers/SetGroupServer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/api/addapi.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/api/addApi.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/api/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/api/edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/api/editapi.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/api/editApi.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/infoClass/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/infoClass/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/infoList/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/infoList/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/infoList/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/infoList/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/infoList/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/infoList/show.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +88,9 @@
     <option name="indexEntireGoPath" value="false" />
   </component>
   <component name="ProjectId" id="1jHT1riuFiQkzXrtN26uWFcR85b" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -78,23 +102,23 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\goLand\code\project\src\gushici\views" />
+      <recent name="D:\goLand\code\project\src\gushici\views\idiom" />
+      <recent name="D:\goLand\code\project\src\gushici\controllers" />
+      <recent name="D:\goLand\code\project\src\gushici\libs" />
+      <recent name="D:\goLand\code\project\src\gushici\static\upload\image" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\goLand\code\project\src\gushici" />
       <recent name="D:\goLand\code\project\src\gushici\businesses" />
       <recent name="D:\goLand\code\project\src\gushici\Businesses" />
       <recent name="D:\goLand\code\project\src\gushici\static\upload" />
       <recent name="D:\goLand\code\project\src\gushici\uploads\image" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\goLand\code\project\src\gushici\controllers" />
-      <recent name="D:\goLand\code\project\src\gushici\libs" />
-      <recent name="D:\goLand\code\project\src\gushici\static\upload\image" />
-      <recent name="D:\goLand\code\project\src\gushici\servers" />
-      <recent name="D:\goLand\code\project\src\gushici" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -103,6 +127,17 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -120,18 +155,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="258" y="85" key="EditFileWatcherDialog/0.0.1366.728@0.0.1366.728" timestamp="1603463140870" />
-    <state x="410" y="59" key="FileChooserDialogImpl" timestamp="1605409826669">
+    <state x="410" y="59" key="FileChooserDialogImpl" timestamp="1605419956242">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="410" y="59" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1605409826669" />
+    <state x="410" y="59" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1605419956242" />
     <state x="52" y="0" key="SettingsEditor" timestamp="1605409923097">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="52" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1605409923097" />
-    <state x="237" y="0" width="962" height="728" key="find.popup" timestamp="1605410018668">
+    <state x="237" y="0" width="962" height="728" key="find.popup" timestamp="1605432155337">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="237" y="0" width="962" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1605410018668" />
+    <state x="237" y="0" width="962" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1605432155337" />
     <state x="262" y="-1" width="840" height="1034" key="search.everywhere.popup" timestamp="1604203402389">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

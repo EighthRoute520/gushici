@@ -8,7 +8,6 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/astaxie/beego"
 	"gushici/models"
 	"gushici/servers"
 	"strconv"
@@ -82,14 +81,14 @@ func (this *RoleController) AjaxSave() {
 	}
 	role.RoleName = strings.TrimSpace(this.GetString("role_name"))
 	role.Detail = strings.TrimSpace(this.GetString("detail"))
-	role.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
-	role.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	role.CreateTime = time.Now()
+	role.UpdateTime = time.Now()
 	role.Status = 1
 	auths := strings.TrimSpace(this.GetString("nodes_data"))
 
 	if role_id == 0 {
 		//新增
-		role.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		role.CreateTime = time.Now()
 		role.CreateId = this.userId
 		if id, err := (&servers.RoleServer{}).Add(role); err != nil {
 			this.ajaxMsg(err.Error(), MSG_ERR)
@@ -129,7 +128,7 @@ func (this *RoleController) AjaxDel() {
 	role, _ := (&servers.RoleServer{}).GetById(role_id)
 	role.Status = 0
 	role.Id = role_id
-	role.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	role.UpdateTime = time.Now()
 
 	if err := (&servers.RoleServer{}).Update(role); err != nil {
 		this.ajaxMsg(err.Error(), MSG_ERR)

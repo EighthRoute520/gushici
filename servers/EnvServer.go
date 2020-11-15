@@ -11,6 +11,7 @@ import (
 	"gushici/models"
 )
 
+//用一个空的结构体，是为了定义他自己的方法，这样就不会跟同命名空间下其他方法重名，尽量使用对象方法，少使用函数
 type EnvServer struct{}
 
 //获取多条SetEnvModel
@@ -20,7 +21,7 @@ func (this *EnvServer) GetList(page int, pageSize int, filters map[string]interf
 	query := orm.NewOrm().QueryTable((&models.SetEnvModel{}).TableName())
 	if len(filters) > 0 {
 		for k, v := range filters {
-			query.Filter(k, v)
+			query = query.Filter(k, v)
 		}
 	}
 	total, _ := query.Count()
@@ -51,11 +52,6 @@ func (this *EnvServer) DealOneData(model *models.SetEnvModel) map[string]interfa
 	return row
 }
 
-//新增一条SetEnvModel
-func (this *EnvServer) Add(model *models.SetEnvModel) (int64, error) {
-	return orm.NewOrm().Insert(model)
-}
-
 //根据id获取SetEnvModel
 func (this *EnvServer) GetById(id int) (*models.SetEnvModel, error) {
 	model := new(models.SetEnvModel)
@@ -74,6 +70,11 @@ func (this *EnvServer) GetByName(EnvName string) (*models.SetEnvModel, error) {
 		return nil, err
 	}
 	return model, nil
+}
+
+//新增一条SetEnvModel
+func (this *EnvServer) Add(model *models.SetEnvModel) (int64, error) {
+	return orm.NewOrm().Insert(model)
 }
 
 //更新一条SetEnvModel

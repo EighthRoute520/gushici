@@ -40,7 +40,7 @@ func (this *LoginController) Login() {
 				errorMsg = "该帐号已禁用"
 			} else {
 				user.LastIp = this.getClientIp()
-				user.LastLogin = beego.Date(time.Now(), "Y-m-d H:i:s")
+				user.LastLogin = time.Now()
 				adminServer.Update(user)
 				authkey := libs.Md5([]byte(this.getClientIp() + "|" + user.Password + user.Salt))
 				this.Ctx.SetCookie("auth", strconv.Itoa(user.Id)+"|"+authkey, 7*86400)

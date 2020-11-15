@@ -11,6 +11,7 @@ import (
 	"gushici/models"
 )
 
+//用一个空的结构体，是为了定义他自己的方法，这样就不会跟同命名空间下其他方法重名，尽量使用对象方法，少使用函数
 type GroupServer struct{}
 
 //获取多条Group
@@ -51,11 +52,6 @@ func (this *GroupServer) DealOneData(model *models.SetGroupModel) map[string]int
 	return row
 }
 
-//新增SetGroupModel
-func (this *GroupServer) Add(model *models.SetGroupModel) (int64, error) {
-	return orm.NewOrm().Insert(model)
-}
-
 //根据id获取SetGroupModel
 func (this *GroupServer) GetById(id int) (*models.SetGroupModel, error) {
 	model := new(models.SetGroupModel)
@@ -74,6 +70,11 @@ func (this *GroupServer) GetByName(groupName string) (*models.SetGroupModel, err
 		return nil, err
 	}
 	return model, nil
+}
+
+//新增SetGroupModel
+func (this *GroupServer) Add(model *models.SetGroupModel) (int64, error) {
+	return orm.NewOrm().Insert(model)
 }
 
 //更新SetGroupModel

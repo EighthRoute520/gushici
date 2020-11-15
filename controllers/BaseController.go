@@ -73,12 +73,13 @@ func (this *BaseController) auth() {
 				this.AdminAuth()
 			}
 			url := this.controllerName + "/" + this.actionName
+			//isHasAuth := strings.Contains(this.allowUrl, strings.ToLower(url))
 			isHasAuth := strings.Contains(this.allowUrl, url)
-			noAuth := "ajaxSave/ajaxDel/table/login/logout/getnodes/start/show/ajaxapisave"
+			noAuth := "ajaxSave/ajaxDel/table/login/logout/getnodes/start/show/ajaxApiSave"
 			isNoAuth := strings.Contains(noAuth, this.actionName)
 			beego.Info(1111, url, this.allowUrl, isHasAuth, noAuth, isNoAuth)
 			if isHasAuth == false && isNoAuth == false {
-				this.Ctx.WriteString("没有权限")
+				//this.Ctx.WriteString("没有权限")
 				this.ajaxMsg("没有权限", MSG_ERR)
 				return
 			}

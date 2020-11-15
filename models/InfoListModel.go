@@ -6,6 +6,8 @@
 
 package models
 
+import "time"
+
 type InfoListModel struct {
 	Id         int
 	ClassId    int
@@ -20,9 +22,9 @@ type InfoListModel struct {
 	LinkUrl    string `orm:"column(linkurl)"`
 	Media      string
 	Hits       int
-	OrderId    int `orm:"column(orderid)"`
-	PostTime   string
-	UpdateTime string
+	OrderId    int       `orm:"column(orderid)"`
+	PostTime   time.Time `orm:"auto_now_add;type(timestamp)"`
+	UpdateTime time.Time `orm:"auto_now;type(timestamp)"`
 	Status     int
 }
 

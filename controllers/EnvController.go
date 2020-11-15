@@ -7,7 +7,6 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"gushici/models"
 	"gushici/servers"
 	"strings"
@@ -73,13 +72,13 @@ func (this *EnvController) AjaxSave() {
 	setEnvModel.EnvHost = strings.TrimSpace(this.GetString("env_host"))
 	setEnvModel.Detail = strings.TrimSpace(this.GetString("detail"))
 	setEnvModel.UpdateId = this.userId
-	setEnvModel.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	setEnvModel.UpdateTime = time.Now()
 	setEnvModel.Status = 1
 
 	//新增
 	if Env_id == 0 {
 		setEnvModel.CreateId = this.userId
-		setEnvModel.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		setEnvModel.CreateTime = time.Now()
 		_, err := (&servers.EnvServer{}).GetByName(setEnvModel.EnvName)
 
 		if err == nil {
@@ -103,7 +102,7 @@ func (this *EnvController) AjaxSave() {
 func (this *EnvController) AjaxDel() {
 	Env_id, _ := this.GetInt("id")
 	setEnvModel, _ := (&servers.EnvServer{}).GetById(Env_id)
-	setEnvModel.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	setEnvModel.UpdateTime = time.Now()
 	setEnvModel.UpdateId = this.userId
 	setEnvModel.Status = 0
 	setEnvModel.Id = Env_id

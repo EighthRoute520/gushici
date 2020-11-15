@@ -24,18 +24,8 @@ func (this *InfoClassController) List() {
 	class_id, _ := this.GetInt("class_id")
 	filters := make(map[string]interface{})
 	filters["status"] = 1
-	result, count := (&servers.InfoClassServer{}).GetList(1, 10, filters)
-	classList := make([]map[string]interface{}, len(result))
-	for k, v := range result {
-		row := make(map[string]interface{})
-		row["id"] = v.Id
-		row["class_name"] = v.ClassName
-		row["linkurl"] = v.LinkUrl
-		row["desc"] = v.Desc
-		row["orderid"] = v.OrderId
-		row["count"] = count
-		classList[k] = row
-	}
+	result, _ := (&servers.InfoClassServer{}).GetList(1, 10, filters)
+	classList := (&servers.InfoClassServer{}).DealListData(result)
 	this.Data["pageTitle"] = "资讯管理"
 	this.Data["news_class"] = classList
 	this.Data["class_id"] = class_id
@@ -46,18 +36,8 @@ func (this *InfoClassController) List() {
 func (this *InfoClassController) Add() {
 	filters := make(map[string]interface{})
 	filters["status"] = 1
-	result, count := (&servers.InfoClassServer{}).GetList(1, 20, filters)
-	list := make([]map[string]interface{}, len(result))
-	for k, v := range result {
-		row := make(map[string]interface{})
-		row["id"] = v.Id
-		row["class_name"] = v.ClassName
-		row["desc"] = v.Desc
-		row["linkurl"] = v.LinkUrl
-		row["orderid"] = v.OrderId
-		row["count"] = count
-		list[k] = row
-	}
+	result, _ := (&servers.InfoClassServer{}).GetList(1, 20, filters)
+	list := (&servers.InfoClassServer{}).DealListData(result)
 	this.Data["pageTitle"] = "新增资讯"
 	this.Data["news_class"] = list
 	this.display()
@@ -67,34 +47,12 @@ func (this *InfoClassController) Add() {
 func (this *InfoClassController) Edit() {
 	id, _ := this.GetInt("id")
 	infoListModel, _ := (&servers.InfoListServer{}).GetOneById(id)
-	infoRow := make(map[string]interface{})
-	infoRow["id"] = infoListModel.Id
-	infoRow["title"] = infoListModel.Title
-	infoRow["class_id"] = infoListModel.ClassId
-	infoRow["orderid"] = infoListModel.OrderId
-	infoRow["keywords"] = infoListModel.Keywords
-	infoRow["used"] = infoListModel.Used
-	infoRow["desc"] = infoListModel.Desc
-	infoRow["content"] = infoListModel.Content
-	infoRow["pic_url"] = infoListModel.PicUrl
-	infoRow["media"] = infoListModel.Media
-	infoRow["author"] = infoListModel.Author
-	infoRow["posttime"] = infoListModel.PostTime
+	infoRow := (&servers.InfoListServer{}).DealOneData(infoListModel)
 
 	filters := make(map[string]interface{})
 	filters["status"] = 1
-	result, count := (&servers.InfoClassServer{}).GetList(1, 10, filters)
-	classList := make([]map[string]interface{}, len(result))
-	for k, v := range result {
-		row := make(map[string]interface{})
-		row["id"] = v.Id
-		row["class_name"] = v.ClassName
-		row["linkurl"] = v.LinkUrl
-		row["desc"] = v.Desc
-		row["orderid"] = v.OrderId
-		row["count"] = count
-		classList[k] = row
-	}
+	result, _ := (&servers.InfoClassServer{}).GetList(1, 10, filters)
+	classList := (&servers.InfoClassServer{}).DealListData(result)
 
 	this.Data["pageTitle"] = "编辑资讯"
 	this.Data["news_class"] = classList
@@ -108,7 +66,7 @@ func (this *InfoClassController) AjaxDel() {
 	infoListModel, _ := (&servers.InfoListServer{}).GetOneById(id)
 	infoListModel.Status = 2
 	infoListModel.Id = id
-	infoListModel.UpdateTime = beego.Date(time.Now(), "Y-m-d H:i:s")
+	infoListModel.UpdateTime = time.Now()
 	err := (&servers.InfoListServer{}).Update(infoListModel)
 	if err != nil {
 		this.ajaxMsg(err.Error(), MSG_ERR)
@@ -134,12 +92,12 @@ func (this *InfoClassController) AjaxSave() {
 	infoListModel.Content = strings.TrimSpace(this.GetString("content"))
 	infoListModel.ClassId = classId
 	infoListModel.OrderId = orderid
-	infoListModel.UpdateTime = beego.Date(time.Now(), "Y-m-d H:i:s")
+	infoListModel.UpdateTime = time.Now()
 	infoListModel.PicUrl = strings.TrimSpace(this.GetString("pic_url"))
 	infoListModel.Media = strings.TrimSpace(this.GetString("media"))
 	infoListModel.Status = 1
 	if id == 0 {
-		infoListModel.PostTime = beego.Date(time.Now(), "Y-m-d H:i:s")
+		infoListModel.PostTime = time.Now()
 		if _, err := (&servers.InfoListServer{}).Add(infoListModel); err != nil {
 			this.ajaxMsg(err.Error(), MSG_ERR)
 		}
@@ -168,21 +126,7 @@ func (this *InfoClassController) Table() {
 		filters["class_id"] = class_id
 	}
 	result, count := (&servers.InfoListServer{}).GetList(page, limit, filters)
-	list := make([]map[string]interface{}, len(result))
-	for k, v := range result {
-		row := make(map[string]interface{})
-		row["id"] = v.Id
-		row["title"] = v.Title
-		row["class_id"] = v.ClassId
-		row["orderid"] = v.OrderId
-		row["keywords"] = v.Keywords
-		row["used"] = v.Used
-		row["desc"] = v.Desc
-		row["pic_url"] = v.PicUrl
-		row["author"] = v.Author
-		row["posttime"] = v.PostTime
-		list[k] = row
-	}
+	list := (&servers.InfoListServer{}).DealListData(result)
 	this.ajaxList("成功", MSG_OK, count, list)
 }
 

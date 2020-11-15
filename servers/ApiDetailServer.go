@@ -18,6 +18,7 @@ var (
 	REQUEST_METHOD = [6]string{"未知", "GET", "POST", "PUT", "PATCH", "DELETE"}
 )
 
+//用一个空的结构体，是为了定义他自己的方法，这样就不会跟同命名空间下其他方法重名，尽量使用对象方法，少使用函数
 type ApiDetailServer struct{}
 
 //根据ID获取ApiDetailModel

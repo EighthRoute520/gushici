@@ -11,6 +11,7 @@ import (
 	"gushici/models"
 )
 
+//用一个空的结构体，是为了定义他自己的方法，这样就不会跟同命名空间下其他方法重名，尽量使用对象方法，少使用函数
 type AdminServer struct{}
 
 //获取多条UcAdminModel

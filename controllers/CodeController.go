@@ -7,7 +7,6 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"gushici/models"
 	"gushici/servers"
 	"strings"
@@ -74,12 +73,12 @@ func (this *CodeController) AjaxSave() {
 	setCodeModel.Desc = strings.TrimSpace(this.GetString("desc"))
 	setCodeModel.Detail = strings.TrimSpace(this.GetString("detail"))
 	setCodeModel.UpdateId = this.userId
-	setCodeModel.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	setCodeModel.UpdateTime = time.Now()
 	setCodeModel.Status = 1
 
 	if Code_id == 0 {
 		setCodeModel.CreateId = this.userId
-		setCodeModel.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		setCodeModel.CreateTime = time.Now()
 		_, err := (&servers.CodeServer{}).GetByName(setCodeModel.Code)
 		if err == nil {
 			this.ajaxMsg("状态码已经存在", MSG_ERR)
@@ -102,7 +101,7 @@ func (this *CodeController) AjaxSave() {
 func (this *CodeController) AjaxDel() {
 	Code_id, _ := this.GetInt("id")
 	setCodeModel, _ := (&servers.CodeServer{}).GetById(Code_id)
-	setCodeModel.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	setCodeModel.UpdateTime = time.Now()
 	setCodeModel.UpdateId = this.userId
 	setCodeModel.Status = 0
 	setCodeModel.Id = Code_id

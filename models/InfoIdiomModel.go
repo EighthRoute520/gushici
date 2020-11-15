@@ -6,6 +6,8 @@
 
 package models
 
+import "time"
+
 type InfoIdiomModel struct {
 	Id          int
 	Image       string
@@ -16,7 +18,7 @@ type InfoIdiomModel struct {
 	Content     string
 	Sort        int
 	Status      int
-	CreateTime  string
+	time.Time   `orm:"auto_now_add;type(timestamp)"`
 }
 
 //获取表名称

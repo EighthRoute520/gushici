@@ -7,7 +7,6 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"gushici/models"
 	"gushici/servers"
 	"strings"
@@ -66,18 +65,18 @@ func (this *GroupController) Table() {
 func (this *GroupController) AjaxSave() {
 	Group_id, _ := this.GetInt("id")
 	Group := new(models.SetGroupModel)
-	if Group_id == 0 {
+	if Group_id != 0 {
 		Group, _ = (&servers.GroupServer{}).GetById(Group_id)
 	}
 	Group.GroupName = strings.TrimSpace(this.GetString("group_name"))
 	Group.Detail = strings.TrimSpace(this.GetString("detail"))
 	Group.UpdateId = this.userId
-	Group.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	Group.UpdateTime = time.Now()
 	Group.Status = 1
 
 	if Group_id == 0 {
 		Group.CreateId = this.userId
-		Group.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		Group.CreateTime = time.Now()
 
 		// 检查登录名是否已经存在
 		_, err := (&servers.GroupServer{}).GetByName(Group.GroupName)
@@ -102,8 +101,11 @@ func (this *GroupController) AjaxSave() {
 func (this *GroupController) AjaxDel() {
 
 	Group_id, _ := this.GetInt("id")
-	Group, _ := (&servers.GroupServer{}).GetById(Group_id)
-	Group.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	Group, err := (&servers.GroupServer{}).GetById(Group_id)
+	if err != nil {
+		this.ajaxMsg(err.Error(), MSG_ERR)
+	}
+	Group.UpdateTime = time.Now()
 	Group.UpdateId = this.userId
 	Group.Status = 0
 	Group.Id = Group_id

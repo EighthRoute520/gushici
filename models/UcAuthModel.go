@@ -6,6 +6,8 @@
 
 package models
 
+import "time"
+
 type UcAuthModel struct {
 	Id         int
 	Pid        int
@@ -18,8 +20,8 @@ type UcAuthModel struct {
 	CreateId   int
 	UpdateId   int
 	Status     int
-	CreateTime string
-	UpdateTime string
+	CreateTime time.Time `orm:"auto_now_add;type(timestamp)"`
+	UpdateTime time.Time `orm:"auto_now;type(timestamp)"`
 }
 
 //获取表名称

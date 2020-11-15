@@ -6,6 +6,8 @@
 
 package models
 
+import "time"
+
 type ApiSourceModel struct {
 	Id         int
 	GroupId    int
@@ -14,9 +16,9 @@ type ApiSourceModel struct {
 	AuditId    int
 	CreateId   int
 	UpdateId   int
-	CreateTime string
-	UpdateTime string
-	AuditTime  string
+	CreateTime time.Time `orm:"auto_now_add;type(timestamp)"`
+	UpdateTime time.Time `orm:"auto_now;type(timestamp)"`
+	AuditTime  time.Time
 }
 
 //获取表名称

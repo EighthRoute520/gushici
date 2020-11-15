@@ -5,7 +5,7 @@
 {{range $ind, $elem := .data.list}}
         <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
             <div class="item">
-                <a class="img_span" href="/show/{{$elem.id}}">
+                <a class="img_span" href="/show/{{$.data.class_id}}/{{$elem.id}}">
                     <span class="img_span" style="background: url({{$elem.picurl}}) center center / cover no-repeat;"></span>
                 </a>
                 <div class="list_p">

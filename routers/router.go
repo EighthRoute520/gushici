@@ -7,7 +7,7 @@ import (
 
 func init() {
 	beego.Router("/", &controllers.InfoListController{}, "GET:Index") //指明只能GET方法可以访问
-	beego.Router("/show/:id", &controllers.InfoListController{}, "GET:Show")
+	beego.Router("/show/:class_id/:id", &controllers.InfoListController{}, "GET:Show")
 	beego.Router("/list/:class_id", &controllers.InfoListController{}, "*:List") //GET 和 POST 都可以访问
 
 	beego.Router("/login", &controllers.LoginController{}, "*:Login")
@@ -33,8 +33,10 @@ func init() {
 	//注意：自动路由不能使用驼峰作为rootpath,应该优先使用明确意义的路由，提高可读性
 	//例如 ApiSourceController 不能使用自动路由找到 /apiSource/index 路由，他能找到 /apisource/index 路由
 	beego.AutoRouter(&controllers.ApiController{})
+	beego.AutoRouter(&controllers.ApiMonitorController{})
 	beego.AutoRouter(&controllers.EnvController{})
 	beego.AutoRouter(&controllers.CodeController{})
+	beego.AutoRouter(&controllers.IdiomController{})
 
 	beego.AutoRouter(&controllers.GroupController{})
 	beego.AutoRouter(&controllers.AuthController{})

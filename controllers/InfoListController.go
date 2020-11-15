@@ -61,6 +61,7 @@ func (this *InfoListController) Index() {
 func (this *InfoListController) Show() {
 	infoListServer := new(servers.InfoListServer)
 	id, _ := this.GetInt(":id")
+	class_id, _ := this.GetInt(":class_id")
 	//当前详情
 	infoListModel, _ := infoListServer.GetOneById(id)
 	row := infoListServer.DealOneData(infoListModel)
@@ -80,6 +81,7 @@ func (this *InfoListController) Show() {
 	}
 
 	row["next"] = nextRow
+	row["class_id"] = class_id
 	this.Data["data"] = row
 	this.Layout = "public/www_layout.html"
 	this.display()
@@ -109,7 +111,7 @@ func (this *InfoListController) List() {
 
 	infoClassServer := new(servers.InfoClassServer)
 	infoClassResult, _ := infoClassServer.GetList(1, 4, nil)
-	classMap := infoClassServer.DealListData(infoClassResult)
+	classMap := infoClassServer.DealListDataMap(infoClassResult)
 	out := make(map[string]interface{})
 	out["count"] = count
 	out["class_id"] = classId

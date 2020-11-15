@@ -8,7 +8,6 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/astaxie/beego"
 	"gushici/libs"
 	"gushici/models"
 	"gushici/servers"
@@ -25,7 +24,6 @@ type AdminController struct {
 func (this *AdminController) List() {
 	this.Data["pageTitle"] = "管理员管理"
 	this.display()
-	//this.TplName = "admin/list.html"
 }
 
 //新增页
@@ -107,7 +105,7 @@ func (this *AdminController) AjaxSave() {
 	Admin.Phone = strings.TrimSpace(this.GetString("phone"))
 	Admin.Email = strings.TrimSpace(this.GetString("email"))
 	Admin.RoleIds = strings.TrimSpace(this.GetString("roleids"))
-	Admin.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	Admin.UpdateTime = time.Now()
 	Admin.UpdateId = this.userId
 	Admin.Status = 1
 
@@ -121,7 +119,7 @@ func (this *AdminController) AjaxSave() {
 		pwd, salt := libs.Password(4, "")
 		Admin.Password = pwd
 		Admin.Salt = salt
-		Admin.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		Admin.CreateTime = time.Now()
 		if _, err := (&servers.AdminServer{}).Add(Admin); err != nil {
 			this.ajaxMsg(err.Error(), MSG_ERR)
 		}
@@ -146,7 +144,7 @@ func (this *AdminController) AjaxSave() {
 func (this *AdminController) AjaxDel() {
 	Admin_id, _ := this.GetInt("id")
 	Admin, _ := (&servers.AdminServer{}).GetById(Admin_id)
-	Admin.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	Admin.UpdateTime = time.Now()
 	Admin.Status = 0
 	Admin.Id = Admin_id
 	if Admin_id == 1 {

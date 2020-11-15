@@ -7,7 +7,6 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"gushici/libs"
 	"gushici/servers"
 	"strings"
@@ -34,7 +33,7 @@ func (this *UserController) AjaxSave() {
 	Admin, _ := (&servers.AdminServer{}).GetById(Admin_id)
 	//修改
 	Admin.Id = Admin_id
-	Admin.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	Admin.UpdateTime = time.Now()
 	Admin.UpdateId = this.userId
 	Admin.LoginName = strings.TrimSpace(this.GetString("login_name"))
 	Admin.RealName = strings.TrimSpace(this.GetString("real_name"))

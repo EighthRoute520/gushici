@@ -6,6 +6,8 @@
 
 package models
 
+import "time"
+
 type UcAdminModel struct {
 	Id         int
 	LoginName  string
@@ -15,13 +17,13 @@ type UcAdminModel struct {
 	Phone      string
 	Email      string
 	Salt       string
-	LastLogin  string
+	LastLogin  time.Time
 	LastIp     string
 	Status     int
 	CreateId   int
 	UpdateId   int
-	CreateTime string
-	UpdateTime string
+	CreateTime time.Time `orm:"auto_now_add;type(timestamp)"`
+	UpdateTime time.Time `orm:"auto_now;type(timestamp)"`
 }
 
 //获取表名称

@@ -38,7 +38,7 @@ func Init() {
 	// 注册模型
 	orm.RegisterModel(new(ApiDetailModel), new(ApiParamModel), new(ApiSourceModel), new(InfoClassModel), new(InfoIdiomModel),
 		new(InfoListModel), new(InfoTagModel), new(SetCodeModel), new(SetEnvModel), new(SetGroupModel), new(UcAdminModel),
-		new(UcAuthModel), new(UcRoleAuthModel), new(UcRoleModel), new(UserInfoModel))
+		new(UcAuthModel), new(UcRoleAuthModel), new(UcRoleModel))
 
 	//根据runmode配置参数决定是否数据库开启Debug模式，Debug模式将会打印SQL语句
 	if beego.AppConfig.String("runmode") == "dev" {

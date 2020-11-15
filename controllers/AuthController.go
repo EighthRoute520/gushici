@@ -7,7 +7,6 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"gushici/models"
 	"gushici/servers"
 	"strings"
@@ -70,7 +69,7 @@ func (this *AuthController) AjaxSave() {
 
 	if id == 0 {
 		//新增
-		auth.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		auth.CreateTime = time.Now()
 		auth.CreateId = this.userId
 		if _, err := (&servers.AuthServer{}).Add(auth); err != nil {
 			this.ajaxMsg(err.Error(), MSG_ERR)
@@ -80,7 +79,7 @@ func (this *AuthController) AjaxSave() {
 	//更新
 	auth.Id = id
 	auth.UpdateId = this.userId
-	auth.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	auth.UpdateTime = time.Now()
 	if err := (&servers.AuthServer{}).Update(auth); err != nil {
 		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
@@ -93,7 +92,7 @@ func (this *AuthController) AjaxDel() {
 	id, _ := this.GetInt("id")
 	auth, _ := (&servers.AuthServer{}).GetById(id)
 	auth.Id = id
-	auth.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	auth.UpdateTime = time.Now()
 	auth.Status = 0
 	if err := (&servers.AuthServer{}).Update(auth); err != nil {
 		this.ajaxMsg(err.Error(), MSG_ERR)

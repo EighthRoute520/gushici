@@ -6,6 +6,8 @@
 
 package models
 
+import "time"
+
 type ApiDetailModel struct {
 	Id           int
 	SourceId     int
@@ -16,15 +18,16 @@ type ApiDetailModel struct {
 	Result       string
 	Example      string
 	Detail       string
-	AuditTime    string
+	AuditTime    time.Time
 	AuditId      int
 	Status       int
 	CreateId     int
 	UpdateId     int
-	CreateTime   string
-	UpdateTime   string
+	CreateTime   time.Time `orm:"auto_now_add;type(timestamp)"`
+	UpdateTime   time.Time `orm:"auto_now;type(timestamp)"`
 }
 
+//ApiDetailModel扩展类
 type ApiDetailExtensionModel struct {
 	ApiDetailModel ApiDetailModel
 	CreateName     string

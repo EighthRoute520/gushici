@@ -27,7 +27,7 @@ func (this *InfoListServer) GetList(page int, pageSize int, filters map[string]i
 		}
 	}
 	count, _ := query.Count()
-	query.OrderBy("-orderid", "-id").Limit(pageSize, offset).All(&list)
+	query.OrderBy("-orderid", "-id").Limit(pageSize, offset).All(&list) //主要list必须是引用
 	return list, count
 }
 
@@ -48,8 +48,13 @@ func (this *InfoListServer) DealOneData(model *models.InfoListModel) map[string]
 	row["id"] = model.Id
 	row["title"] = model.Title
 	row["class_id"] = model.ClassId
+	row["orderid"] = model.OrderId
+	row["keywords"] = model.Keywords
+	row["used"] = model.Used
+	row["posttime"] = model.PostTime
+	row["content"] = model.Content
 
-	if string(model.PicUrl) == "" {
+	if model.PicUrl == "" {
 		var r = rand.Intn(10)
 		model.PicUrl = "/uploads/image/rand" + fmt.Sprintf("%d", r) + ".jpeg"
 	}
@@ -74,7 +79,7 @@ func (this *InfoListServer) DealOneData(model *models.InfoListModel) map[string]
 //获取一条InfoListModel数据
 func (this *InfoListServer) GetOneById(id int) (*models.InfoListModel, error) {
 	model := new(models.InfoListModel)
-	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
+	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model) //由于model是new出来的，已经是引用类型
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +92,7 @@ func (this *InfoListServer) GetNextOneById(id int) (*models.InfoListModel, error
 	sql := fmt.Sprintf("select id,title from "+model.TableName()+
 		" where status=1 and id < %d order by id desc limit 1", id)
 
-	err := orm.NewOrm().Raw(sql).QueryRow(model)
+	err := orm.NewOrm().Raw(sql).QueryRow(model) //使用sql方式查询
 	if err != nil {
 		return nil, err
 	}

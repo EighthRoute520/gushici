@@ -8,7 +8,7 @@
             {{range $ind, $elem := .data.list4}}
                 <div class="layui-col-xs12 layui-col-sm6 layui-col-lg4">
                     <div class="item">
-                        <a class="img_span" href="/show/{{$elem.id}}">
+                        <a class="img_span" href="/show/{{$.data.class_id}}/{{$elem.id}}">
                             <span class="img_span" style="background: url({{$elem.picurl}}) center center / cover no-repeat;"></span>
                         </a>
                         <div class="list_p">
@@ -34,7 +34,7 @@
             {{range $ind, $elem := .data.list2}}
                 <div class="layui-col-xs12 layui-col-sm6 layui-col-lg4">
                     <div class="item">
-                        <a class="img_span" href="/show/{{$elem.id}}">
+                        <a class="img_span" href="/show/{{$.data.class_id}}/{{$elem.id}}">
                             <span class="img_span" style="background: url({{$elem.picurl}}) center center / cover no-repeat;"></span>
                         </a>
                         <div class="list_p">
@@ -60,7 +60,7 @@
             {{range $ind, $elem := .data.list}}
                 <div class="layui-col-xs12 layui-col-sm6 layui-col-lg4">
                     <div class="item">
-                        <a class="img_span" href="/show/{{$elem.id}}">
+                        <a class="img_span" href="/show/{{$.data.class_id}}/{{$elem.id}}">
 
                             <span class="img_span" style="background: url({{$elem.picurl}}) center center / cover no-repeat;"></span>
                         </a>
@@ -91,7 +91,7 @@
 
                     <div class="index-list">
                         {{range $ind, $elem := .data.list3}}
-                            <a href="/show/{{$elem.id}}" class="layui-show">{{$elem.title}}</a>
+                            <a href="/show/{{$.data.class_id}}/{{$elem.id}}" class="layui-show">{{$elem.title}}</a>
                         {{end}}
                     </div>
 

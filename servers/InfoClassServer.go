@@ -29,22 +29,36 @@ func (this *InfoClassServer) GetList(page int, pageSize int, filters map[string]
 	return list, count
 }
 
-//处理多条InfoClassModel返回调用者
-func (this *InfoClassServer) DealListData(result []*models.InfoClassModel) map[int]string {
+//处理多条InfoClassModel返回调用者,返回形式为 [key=>value]形式map
+func (this *InfoClassServer) DealListDataMap(models []*models.InfoClassModel) map[int]string {
 	classMap := make(map[int]string)
-	for _, v := range result {
+	for _, v := range models {
 		classMap[v.Id] = v.ClassName
 	}
 	return classMap
 }
 
-//新增一条InfoClassModel
-func (this *InfoClassServer) Add(model *models.InfoClassModel) (int64, error) {
-	id, err := orm.NewOrm().Insert(model)
-	if err != nil {
-		return 0, err
+//处理多条InfoClassModel返回调用者
+func (this *InfoClassServer) DealListData(models []*models.InfoClassModel) []map[string]interface{} {
+	count := len(models)
+	list := make([]map[string]interface{}, count)
+	for k, v := range models {
+		row := this.DealOneData(v)
+		list[k] = row
 	}
-	return id, err
+	return list
+}
+
+//处理一条数据返回给前端
+func (this *InfoClassServer) DealOneData(model *models.InfoClassModel) map[string]interface{} {
+	row := make(map[string]interface{})
+	row["id"] = model.Id
+	row["class_name"] = model.ClassName
+	row["linkurl"] = model.LinkUrl
+	row["desc"] = model.Desc
+	row["orderid"] = model.OrderId
+
+	return row
 }
 
 //根据id获取InfoClassModel
@@ -55,6 +69,15 @@ func (this *InfoClassServer) GetById(id int) (*models.InfoClassModel, error) {
 		return nil, err
 	}
 	return model, nil
+}
+
+//新增一条InfoClassModel
+func (this *InfoClassServer) Add(model *models.InfoClassModel) (int64, error) {
+	id, err := orm.NewOrm().Insert(model)
+	if err != nil {
+		return 0, err
+	}
+	return id, err
 }
 
 //更新InfoClassModel

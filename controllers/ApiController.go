@@ -7,7 +7,6 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"gushici/models"
 	"gushici/servers"
 	"strconv"
@@ -105,21 +104,22 @@ func (this *ApiController) AjaxSave() {
 	if Api_id != 0 {
 		Api, _ = (&servers.ApiSourceServer{}).GetById(Api_id)
 		Api.UpdateId = this.userId
-		Api.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 	}
 	Api.SourceName = strings.TrimSpace(this.GetString("source_name"))
 	Api.GroupId, _ = this.GetInt("group_id")
+	Api.UpdateTime = time.Now()
 	Api.Status = 2
-
-	// 检查登录名是否已经存在
-	_, err := (&servers.ApiSourceServer{}).GetByName(Api.SourceName)
-	if err == nil {
-		this.ajaxMsg("资源名已经存在", MSG_ERR)
-	}
 
 	if Api_id == 0 {
 		Api.CreateId = this.userId
-		Api.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		Api.CreateTime = time.Now()
+
+		// 检查登录名是否已经存在
+		_, err := (&servers.ApiSourceServer{}).GetByName(Api.SourceName)
+		if err == nil {
+			this.ajaxMsg("资源名已经存在", MSG_ERR)
+		}
+
 		if _, err := (&servers.ApiSourceServer{}).Add(Api); err != nil {
 			this.ajaxMsg(err.Error(), MSG_ERR)
 		}
@@ -136,7 +136,7 @@ func (this *ApiController) AjaxSave() {
 func (this *ApiController) AjaxDel() {
 	Api_id, _ := this.GetInt("id")
 	Api, _ := (&servers.ApiSourceServer{}).GetById(Api_id)
-	Api.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	Api.UpdateTime = time.Now()
 	Api.UpdateId = this.userId
 	Api.Status = 0
 	Api.Id = Api_id
@@ -186,13 +186,13 @@ func (this *ApiController) AjaxApiSave() {
 	ApiDetail.Example = strings.TrimSpace(this.GetString("example"))
 	ApiDetail.Detail = strings.TrimSpace(this.GetString("detail"))
 	ApiDetail.UpdateId = this.userId
-	ApiDetail.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+	ApiDetail.UpdateTime = time.Now()
 	ApiDetail.Status = 1
 
 	//新增
 	if Api_id == 0 {
 		ApiDetail.CreateId = this.userId
-		ApiDetail.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		ApiDetail.CreateTime = time.Now()
 		detail_id, err := (&servers.ApiDetailServer{}).Add(ApiDetail)
 		if err != nil {
 			this.ajaxMsg(err.Error(), MSG_ERR)
@@ -257,8 +257,8 @@ func (this *ApiController) batchAdd4Form(Api_id int) error {
 		apiParam.DetailId = Api_id
 		apiParam.CreateId = this.userId
 		apiParam.UpdateId = this.userId
-		apiParam.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
-		apiParam.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
+		apiParam.CreateTime = time.Now()
+		apiParam.UpdateTime = time.Now()
 		apiParam.Status = 1
 
 		if _, err := (&servers.ApiParamServer{}).Add(apiParam); err != nil {

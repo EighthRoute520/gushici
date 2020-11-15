@@ -12,6 +12,7 @@ import (
 	"gushici/models"
 )
 
+//用一个空的结构体，是为了定义他自己的方法，这样就不会跟同命名空间下其他方法重名，尽量使用对象方法，少使用函数
 type AuthServer struct{}
 
 //获取列表
@@ -56,7 +57,18 @@ func (this *AuthServer) DealOneData(model *models.UcAuthModel) map[string]interf
 	return row
 }
 
-//根据id获取UcAuthModel
+//根据id获取一条UcAuthModel
+func (this *AuthServer) GetById(id int) (*models.UcAuthModel, error) {
+	model := new(models.UcAuthModel)
+
+	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
+	if err != nil {
+		return nil, err
+	}
+	return model, nil
+}
+
+//根据ids获取UcAuthModel列表
 func (this *AuthServer) AuthGetListByIds(authIds string, userId int) ([]*models.UcAuthModel, error) {
 	list1 := make([]*models.UcAuthModel, 0)
 	var list []orm.Params
@@ -79,17 +91,6 @@ func (this *AuthServer) AuthGetListByIds(authIds string, userId int) ([]*models.
 //新增一条UcAuthModel
 func (this *AuthServer) Add(model *models.UcAuthModel) (int64, error) {
 	return orm.NewOrm().Insert(model)
-}
-
-//根据id获取UcAuthModel
-func (this *AuthServer) GetById(id int) (*models.UcAuthModel, error) {
-	model := new(models.UcAuthModel)
-
-	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
-	if err != nil {
-		return nil, err
-	}
-	return model, nil
 }
 
 //更新一条UcAuthModel

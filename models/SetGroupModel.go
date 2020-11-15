@@ -6,6 +6,8 @@
 
 package models
 
+import "time"
+
 type SetGroupModel struct {
 	Id         int
 	GroupName  string
@@ -13,8 +15,8 @@ type SetGroupModel struct {
 	Status     int
 	CreateId   int
 	UpdateId   int
-	CreateTime string
-	UpdateTime string
+	CreateTime time.Time `orm:"auto_now_add;type(timestamp)"`
+	UpdateTime time.Time `orm:"auto_now;type(timestamp)"`
 }
 
 //获取表名称
