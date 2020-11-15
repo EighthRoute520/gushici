@@ -20,6 +20,6 @@ type InfoIdiomModel struct {
 }
 
 //获取表名称
-func (self *InfoIdiomModel) TableName() string {
+func (this *InfoIdiomModel) TableName() string {
 	return TableName("info_idiom")
 }

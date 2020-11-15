@@ -13,6 +13,6 @@ type InfoTagModel struct {
 }
 
 //获取表名称
-func (self *InfoTagModel) TableName() string {
+func (this *InfoTagModel) TableName() string {
 	return TableName("info_tag")
 }

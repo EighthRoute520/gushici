@@ -14,7 +14,7 @@ import (
 type SetGroupServer struct{}
 
 //获取分组列表
-func (self *SetGroupServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.SetGroupModel, int64) {
+func (this *SetGroupServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.SetGroupModel, int64) {
 	offset := (page - 1) * pageSize
 	list := make([]*models.SetGroupModel, 0)
 	query := orm.NewOrm().QueryTable((&models.SetGroupModel{}).TableName())
@@ -30,18 +30,18 @@ func (self *SetGroupServer) GetList(page int, pageSize int, filters map[string]i
 }
 
 //处理多条数据返回给前端
-func (self *SetGroupServer) DealListData(models []*models.SetGroupModel) []map[string]interface{} {
+func (this *SetGroupServer) DealListData(models []*models.SetGroupModel) []map[string]interface{} {
 	count := len(models)
 	list := make([]map[string]interface{}, count)
 	for k, v := range models {
-		row := self.DealOneData(v)
+		row := this.DealOneData(v)
 		list[k] = row
 	}
 	return list
 }
 
 //处理一条数据返回给前端
-func (self *SetGroupServer) DealOneData(model *models.SetGroupModel) map[string]interface{} {
+func (this *SetGroupServer) DealOneData(model *models.SetGroupModel) map[string]interface{} {
 	row := make(map[string]interface{})
 	row["id"] = model.Id
 	row["group_name"] = model.GroupName

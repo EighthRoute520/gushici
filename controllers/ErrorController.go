@@ -8,17 +8,17 @@ type ErrorController struct {
 	beego.Controller
 }
 
-func (self *ErrorController) Error404() {
-	self.Data["content"] = "page not found"
-	self.TplName = "error/404.html"
+func (this *ErrorController) Error404() {
+	this.Data["content"] = "page not found"
+	this.TplName = "error/404.html"
 }
 
-func (self *ErrorController) Error501() {
-	self.Data["content"] = "server error"
-	self.TplName = "error/501.html"
+func (this *ErrorController) Error501() {
+	this.Data["content"] = "server error"
+	this.TplName = "error/501.html"
 }
 
-func (self *ErrorController) ErrorDb() {
-	self.Data["content"] = "database is now down"
-	self.TplName = "error/dberror.html"
+func (this *ErrorController) ErrorDb() {
+	this.Data["content"] = "database is now down"
+	this.TplName = "error/dberror.html"
 }

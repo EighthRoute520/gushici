@@ -16,6 +16,6 @@ type InfoClassModel struct {
 }
 
 //获取表名称
-func (self *InfoClassModel) TableName() string {
+func (this *InfoClassModel) TableName() string {
 	return TableName("info_class")
 }

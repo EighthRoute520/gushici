@@ -17,12 +17,12 @@ import (
 type RoleAuthServer struct{}
 
 //新增一个UcRoleAuthModel
-func (self *RoleAuthServer) Add(model *models.UcRoleAuthModel) (int64, error) {
+func (this *RoleAuthServer) Add(model *models.UcRoleAuthModel) (int64, error) {
 	return orm.NewOrm().Insert(model)
 }
 
 //根据roleId获取UcRoleAuthModel
-func (self *RoleAuthServer) GetById(id int) ([]*models.UcRoleAuthModel, error) {
+func (this *RoleAuthServer) GetById(id int) ([]*models.UcRoleAuthModel, error) {
 	list := make([]*models.UcRoleAuthModel, 0)
 	query := orm.NewOrm().QueryTable((&models.UcRoleAuthModel{}).TableName())
 	_, err := query.Filter("role_id", id).All(&list, "AuthId")
@@ -33,13 +33,13 @@ func (self *RoleAuthServer) GetById(id int) ([]*models.UcRoleAuthModel, error) {
 }
 
 //根据RoleId删除UcRoleAuthModel
-func (self *RoleAuthServer) Delete(id int) (int64, error) {
+func (this *RoleAuthServer) Delete(id int) (int64, error) {
 	query := orm.NewOrm().QueryTable((&models.UcRoleAuthModel{}).TableName())
 	return query.Filter("role_id", id).Delete()
 }
 
 //根据RoleIds获取多个Authids
-func (self *RoleAuthServer) GetByIds(RoleIds string) (Authids string, err error) {
+func (this *RoleAuthServer) GetByIds(RoleIds string) (Authids string, err error) {
 	list := make([]*models.UcRoleAuthModel, 0)
 	query := orm.NewOrm().QueryTable((&models.UcRoleAuthModel{}).TableName())
 	ids := strings.Split(RoleIds, ",")
@@ -59,7 +59,7 @@ func (self *RoleAuthServer) GetByIds(RoleIds string) (Authids string, err error)
 }
 
 //批量增加UcRoleAuthModel
-func (self *RoleAuthServer) MultiAdd(list []*models.UcRoleAuthModel) (n int, err error) {
+func (this *RoleAuthServer) MultiAdd(list []*models.UcRoleAuthModel) (n int, err error) {
 	query := orm.NewOrm().QueryTable((&models.UcRoleAuthModel{}).TableName())
 	i, _ := query.PrepareInsert()
 	for _, ra := range list {

@@ -22,6 +22,6 @@ type ApiParamModel struct {
 }
 
 //获取表名称
-func (self *ApiParamModel) TableName() string {
+func (this *ApiParamModel) TableName() string {
 	return TableName("api_param")
 }

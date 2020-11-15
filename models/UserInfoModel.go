@@ -19,6 +19,6 @@ type UserInfoModel struct {
 }
 
 //获取表名称
-func (self *UserInfoModel) TableName() string {
+func (this *UserInfoModel) TableName() string {
 	return TableName("user_info")
 }

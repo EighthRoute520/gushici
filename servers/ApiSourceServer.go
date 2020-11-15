@@ -14,7 +14,7 @@ import (
 type ApiSourceServer struct{}
 
 //获取列表
-func (self *ApiSourceServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.ApiSourceModel, int64) {
+func (this *ApiSourceServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.ApiSourceModel, int64) {
 	offset := (page - 1) * pageSize
 	list := make([]*models.ApiSourceModel, 0)
 	query := orm.NewOrm().QueryTable((&models.ApiSourceModel{}).TableName())
@@ -30,18 +30,18 @@ func (self *ApiSourceServer) GetList(page int, pageSize int, filters map[string]
 }
 
 //处理多条数据返回给前端
-func (self *ApiSourceServer) DealListData(models []*models.ApiSourceModel) []map[string]interface{} {
+func (this *ApiSourceServer) DealListData(models []*models.ApiSourceModel) []map[string]interface{} {
 	count := len(models)
 	list := make([]map[string]interface{}, count)
 	for k, v := range models {
-		row := self.DealOneData(v)
+		row := this.DealOneData(v)
 		list[k] = row
 	}
 	return list
 }
 
 //处理一条数据返回给前端
-func (self *ApiSourceServer) DealOneData(model *models.ApiSourceModel) map[string]interface{} {
+func (this *ApiSourceServer) DealOneData(model *models.ApiSourceModel) map[string]interface{} {
 	row := make(map[string]interface{})
 	row["id"] = model.Id
 	row["source_name"] = model.SourceName
@@ -51,7 +51,7 @@ func (self *ApiSourceServer) DealOneData(model *models.ApiSourceModel) map[strin
 }
 
 //根据id获取ApiSourceModel
-func (self *ApiSourceServer) GetById(id int) (*models.ApiSourceModel, error) {
+func (this *ApiSourceServer) GetById(id int) (*models.ApiSourceModel, error) {
 	model := new(models.ApiSourceModel)
 	err := orm.NewOrm().QueryTable((&models.ApiSourceModel{}).TableName()).Filter("id", id).One(model)
 	if err != nil {
@@ -61,7 +61,7 @@ func (self *ApiSourceServer) GetById(id int) (*models.ApiSourceModel, error) {
 }
 
 //根据source_name查找ApiSourceModel是否存在
-func (self *ApiSourceServer) GetByName(ApiName string) (*models.ApiSourceModel, error) {
+func (this *ApiSourceServer) GetByName(ApiName string) (*models.ApiSourceModel, error) {
 	model := new(models.ApiSourceModel)
 	err := orm.NewOrm().QueryTable((&models.ApiSourceModel{}).TableName()).Filter("source_name", ApiName).One(model)
 	if err != nil {
@@ -71,12 +71,12 @@ func (self *ApiSourceServer) GetByName(ApiName string) (*models.ApiSourceModel, 
 }
 
 //新增一条ApiSourceModel
-func (self *ApiSourceServer) Add(model *models.ApiSourceModel) (int64, error) {
+func (this *ApiSourceServer) Add(model *models.ApiSourceModel) (int64, error) {
 	return orm.NewOrm().Insert(model)
 }
 
 //更新ApiSourceModel
-func (self *ApiSourceServer) Update(model *models.ApiSourceModel) error {
+func (this *ApiSourceServer) Update(model *models.ApiSourceModel) error {
 	if _, err := orm.NewOrm().Update(model); err != nil {
 		return err
 	}

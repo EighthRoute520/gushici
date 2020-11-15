@@ -25,6 +25,6 @@ type UcAdminModel struct {
 }
 
 //获取表名称
-func (self *UcAdminModel) TableName() string {
+func (this *UcAdminModel) TableName() string {
 	return TableName("uc_admin")
 }

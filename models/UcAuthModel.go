@@ -23,6 +23,6 @@ type UcAuthModel struct {
 }
 
 //获取表名称
-func (self *UcAuthModel) TableName() string {
+func (this *UcAuthModel) TableName() string {
 	return TableName("uc_auth")
 }

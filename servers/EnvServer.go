@@ -14,7 +14,7 @@ import (
 type EnvServer struct{}
 
 //获取多条SetEnvModel
-func (self *EnvServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.SetEnvModel, int64) {
+func (this *EnvServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.SetEnvModel, int64) {
 	offset := (page - 1) * pageSize
 	list := make([]*models.SetEnvModel, 0)
 	query := orm.NewOrm().QueryTable((&models.SetEnvModel{}).TableName())
@@ -29,18 +29,18 @@ func (self *EnvServer) GetList(page int, pageSize int, filters map[string]interf
 }
 
 //处理多条数据返回给前端
-func (self *EnvServer) DealListData(models []*models.SetEnvModel) []map[string]interface{} {
+func (this *EnvServer) DealListData(models []*models.SetEnvModel) []map[string]interface{} {
 	count := len(models)
 	list := make([]map[string]interface{}, count)
 	for k, v := range models {
-		row := self.DealOneData(v)
+		row := this.DealOneData(v)
 		list[k] = row
 	}
 	return list
 }
 
 //处理一条数据返回给前端
-func (self *EnvServer) DealOneData(model *models.SetEnvModel) map[string]interface{} {
+func (this *EnvServer) DealOneData(model *models.SetEnvModel) map[string]interface{} {
 	row := make(map[string]interface{})
 	row["id"] = model.Id
 	row["env_name"] = model.EnvName
@@ -52,12 +52,12 @@ func (self *EnvServer) DealOneData(model *models.SetEnvModel) map[string]interfa
 }
 
 //新增一条SetEnvModel
-func (self *EnvServer) Add(model *models.SetEnvModel) (int64, error) {
+func (this *EnvServer) Add(model *models.SetEnvModel) (int64, error) {
 	return orm.NewOrm().Insert(model)
 }
 
 //根据id获取SetEnvModel
-func (self *EnvServer) GetById(id int) (*models.SetEnvModel, error) {
+func (this *EnvServer) GetById(id int) (*models.SetEnvModel, error) {
 	model := new(models.SetEnvModel)
 	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
 	if err != nil {
@@ -67,7 +67,7 @@ func (self *EnvServer) GetById(id int) (*models.SetEnvModel, error) {
 }
 
 //根据env_name获取SetEnvModel
-func (self *EnvServer) GetByName(EnvName string) (*models.SetEnvModel, error) {
+func (this *EnvServer) GetByName(EnvName string) (*models.SetEnvModel, error) {
 	model := new(models.SetEnvModel)
 	err := orm.NewOrm().QueryTable(model.TableName()).Filter("env_name", EnvName).One(model)
 	if err != nil {
@@ -77,7 +77,7 @@ func (self *EnvServer) GetByName(EnvName string) (*models.SetEnvModel, error) {
 }
 
 //更新一条SetEnvModel
-func (self *EnvServer) Update(model *models.SetEnvModel) error {
+func (this *EnvServer) Update(model *models.SetEnvModel) error {
 	if _, err := orm.NewOrm().Update(model); err != nil {
 		return err
 	}

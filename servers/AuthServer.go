@@ -15,7 +15,7 @@ import (
 type AuthServer struct{}
 
 //获取列表
-func (self *AuthServer) GetList(page, pageSize int, filters map[string]interface{}) ([]*models.UcAuthModel, int64) {
+func (this *AuthServer) GetList(page, pageSize int, filters map[string]interface{}) ([]*models.UcAuthModel, int64) {
 	offset := (page - 1) * pageSize
 	list := make([]*models.UcAuthModel, 0)
 	query := orm.NewOrm().QueryTable((&models.UcAuthModel{}).TableName())
@@ -31,18 +31,18 @@ func (self *AuthServer) GetList(page, pageSize int, filters map[string]interface
 }
 
 //处理多条数据返回给前端
-func (self *AuthServer) DealListData(models []*models.UcAuthModel) []map[string]interface{} {
+func (this *AuthServer) DealListData(models []*models.UcAuthModel) []map[string]interface{} {
 	count := len(models)
 	list := make([]map[string]interface{}, count)
 	for k, v := range models {
-		row := self.DealOneData(v)
+		row := this.DealOneData(v)
 		list[k] = row
 	}
 	return list
 }
 
 //处理一条数据返回给前端
-func (self *AuthServer) DealOneData(model *models.UcAuthModel) map[string]interface{} {
+func (this *AuthServer) DealOneData(model *models.UcAuthModel) map[string]interface{} {
 	row := make(map[string]interface{})
 	row["id"] = model.Id
 	row["pId"] = model.Pid
@@ -57,7 +57,7 @@ func (self *AuthServer) DealOneData(model *models.UcAuthModel) map[string]interf
 }
 
 //根据id获取UcAuthModel
-func (self *AuthServer) AuthGetListByIds(authIds string, userId int) ([]*models.UcAuthModel, error) {
+func (this *AuthServer) AuthGetListByIds(authIds string, userId int) ([]*models.UcAuthModel, error) {
 	list1 := make([]*models.UcAuthModel, 0)
 	var list []orm.Params
 	var err error
@@ -77,12 +77,12 @@ func (self *AuthServer) AuthGetListByIds(authIds string, userId int) ([]*models.
 }
 
 //新增一条UcAuthModel
-func (self *AuthServer) Add(model *models.UcAuthModel) (int64, error) {
+func (this *AuthServer) Add(model *models.UcAuthModel) (int64, error) {
 	return orm.NewOrm().Insert(model)
 }
 
 //根据id获取UcAuthModel
-func (self *AuthServer) GetById(id int) (*models.UcAuthModel, error) {
+func (this *AuthServer) GetById(id int) (*models.UcAuthModel, error) {
 	model := new(models.UcAuthModel)
 
 	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
@@ -93,7 +93,7 @@ func (self *AuthServer) GetById(id int) (*models.UcAuthModel, error) {
 }
 
 //更新一条UcAuthModel
-func (self *AuthServer) Update(model *models.UcAuthModel) error {
+func (this *AuthServer) Update(model *models.UcAuthModel) error {
 	if _, err := orm.NewOrm().Update(model); err != nil {
 		return err
 	}

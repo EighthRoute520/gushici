@@ -27,6 +27,6 @@ type InfoListModel struct {
 }
 
 //获取表名称
-func (self *InfoListModel) TableName() string {
+func (this *InfoListModel) TableName() string {
 	return TableName("info_list")
 }

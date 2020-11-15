@@ -33,6 +33,6 @@ type ApiDetailExtensionModel struct {
 }
 
 //获取表名称
-func (self *ApiDetailModel) TableName() string {
+func (this *ApiDetailModel) TableName() string {
 	return TableName("api_detail")
 }

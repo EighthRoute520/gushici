@@ -19,36 +19,36 @@ type EnvController struct {
 }
 
 //环境设置首页
-func (self *EnvController) List() {
-	self.Data["pageTitle"] = "环境设置"
-	self.display()
+func (this *EnvController) List() {
+	this.Data["pageTitle"] = "环境设置"
+	this.display()
 }
 
 //新增环境设置
-func (self *EnvController) Add() {
-	self.Data["pageTitle"] = "新增环境"
-	self.display()
+func (this *EnvController) Add() {
+	this.Data["pageTitle"] = "新增环境"
+	this.display()
 }
 
 //编辑环境设置
-func (self *EnvController) Edit() {
-	self.Data["pageTitle"] = "编辑环境"
+func (this *EnvController) Edit() {
+	this.Data["pageTitle"] = "编辑环境"
 
-	id, _ := self.GetInt("id", 0)
+	id, _ := this.GetInt("id", 0)
 	setEnvModel, _ := (&servers.EnvServer{}).GetById(id)
 	row := (&servers.EnvServer{}).DealOneData(setEnvModel)
-	self.Data["env"] = row
-	self.display()
+	this.Data["env"] = row
+	this.display()
 }
 
 //环境设置数据列表
-func (self *EnvController) Table() {
+func (this *EnvController) Table() {
 	//列表
-	page, err := self.GetInt("page")
+	page, err := this.GetInt("page")
 	if err != nil {
 		page = 1
 	}
-	limit, err := self.GetInt("limit")
+	limit, err := this.GetInt("limit")
 	if err != nil {
 		limit = 30
 	}
@@ -59,57 +59,57 @@ func (self *EnvController) Table() {
 	result, count := (&servers.EnvServer{}).GetList(page, limit, filters)
 	list := (&servers.EnvServer{}).DealListData(result)
 
-	self.ajaxList("成功", MSG_OK, count, list)
+	this.ajaxList("成功", MSG_OK, count, list)
 }
 
 //新增或者编辑环境设置时的保存
-func (self *EnvController) AjaxSave() {
-	Env_id, _ := self.GetInt("id")
+func (this *EnvController) AjaxSave() {
+	Env_id, _ := this.GetInt("id")
 	setEnvModel := new(models.SetEnvModel)
 	if Env_id != 0 {
 		setEnvModel, _ = (&servers.EnvServer{}).GetById(Env_id)
 	}
-	setEnvModel.EnvName = strings.TrimSpace(self.GetString("env_name"))
-	setEnvModel.EnvHost = strings.TrimSpace(self.GetString("env_host"))
-	setEnvModel.Detail = strings.TrimSpace(self.GetString("detail"))
-	setEnvModel.UpdateId = self.userId
+	setEnvModel.EnvName = strings.TrimSpace(this.GetString("env_name"))
+	setEnvModel.EnvHost = strings.TrimSpace(this.GetString("env_host"))
+	setEnvModel.Detail = strings.TrimSpace(this.GetString("detail"))
+	setEnvModel.UpdateId = this.userId
 	setEnvModel.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 	setEnvModel.Status = 1
 
 	//新增
 	if Env_id == 0 {
-		setEnvModel.CreateId = self.userId
+		setEnvModel.CreateId = this.userId
 		setEnvModel.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 		_, err := (&servers.EnvServer{}).GetByName(setEnvModel.EnvName)
 
 		if err == nil {
-			self.ajaxMsg("环境名称已经存在", MSG_ERR)
+			this.ajaxMsg("环境名称已经存在", MSG_ERR)
 		}
 
 		if _, err := (&servers.EnvServer{}).Add(setEnvModel); err != nil {
-			self.ajaxMsg(err.Error(), MSG_ERR)
+			this.ajaxMsg(err.Error(), MSG_ERR)
 		}
-		self.ajaxMsg("", MSG_OK)
+		this.ajaxMsg("", MSG_OK)
 	}
 
 	// 修改
 	if err := (&servers.EnvServer{}).Update(setEnvModel); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
-	self.ajaxMsg("", MSG_OK)
+	this.ajaxMsg("", MSG_OK)
 }
 
 //删除环境设置
-func (self *EnvController) AjaxDel() {
-	Env_id, _ := self.GetInt("id")
+func (this *EnvController) AjaxDel() {
+	Env_id, _ := this.GetInt("id")
 	setEnvModel, _ := (&servers.EnvServer{}).GetById(Env_id)
 	setEnvModel.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
-	setEnvModel.UpdateId = self.userId
+	setEnvModel.UpdateId = this.userId
 	setEnvModel.Status = 0
 	setEnvModel.Id = Env_id
 
 	if err := (&servers.EnvServer{}).Update(setEnvModel); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
-	self.ajaxMsg("", MSG_OK)
+	this.ajaxMsg("", MSG_OK)
 }

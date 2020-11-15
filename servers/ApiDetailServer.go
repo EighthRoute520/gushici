@@ -21,7 +21,7 @@ var (
 type ApiDetailServer struct{}
 
 //根据ID获取ApiDetailModel
-func (self *ApiDetailServer) GetById(id int) (*models.ApiDetailModel, error) {
+func (this *ApiDetailServer) GetById(id int) (*models.ApiDetailModel, error) {
 	model := new(models.ApiDetailModel)
 	err := orm.NewOrm().QueryTable((&models.ApiDetailModel{}).TableName()).Filter("id", id).One(model)
 	if err != nil {
@@ -31,7 +31,7 @@ func (self *ApiDetailServer) GetById(id int) (*models.ApiDetailModel, error) {
 }
 
 //根据ID获取ApiDetailExtensionModel
-func (self *ApiDetailServer) GetExtensionById(id int) ([]*models.ApiDetailExtensionModel, error) {
+func (this *ApiDetailServer) GetExtensionById(id int) ([]*models.ApiDetailExtensionModel, error) {
 	list := make([]*models.ApiDetailExtensionModel, 0)
 	sql := "SELECT pp_api_detail.*,a.real_name as create_name,b.real_name as update_name,c.real_name as audit_name FROM pp_api_detail LEFT JOIN pp_uc_admin as a ON pp_api_detail.create_id=a.id LEFT JOIN pp_uc_admin as b ON pp_api_detail.update_id=b.id LEFT JOIN pp_uc_admin as c ON pp_api_detail.audit_id=c.id WHERE pp_api_detail.source_id=?"
 	orm.NewOrm().Raw(sql, id).QueryRows(&list)
@@ -40,18 +40,18 @@ func (self *ApiDetailServer) GetExtensionById(id int) ([]*models.ApiDetailExtens
 }
 
 //处理多条数据返回给前端
-func (self *ApiDetailServer) DealListData(models []*models.ApiDetailExtensionModel) []map[string]interface{} {
+func (this *ApiDetailServer) DealListData(models []*models.ApiDetailExtensionModel) []map[string]interface{} {
 	count := len(models)
 	list := make([]map[string]interface{}, count)
 	for k, v := range models {
-		row := self.DealOneData(v)
+		row := this.DealOneData(v)
 		list[k] = row
 	}
 	return list
 }
 
 //处理一条数据
-func (self *ApiDetailServer) DealOneData(model *models.ApiDetailExtensionModel) map[string]interface{} {
+func (this *ApiDetailServer) DealOneData(model *models.ApiDetailExtensionModel) map[string]interface{} {
 	row := make(map[string]interface{})
 	row["id"] = model.ApiDetailModel.Id
 	row["source_id"] = model.ApiDetailModel.SourceId
@@ -75,12 +75,12 @@ func (self *ApiDetailServer) DealOneData(model *models.ApiDetailExtensionModel) 
 }
 
 //新增一条ApiDetailModel
-func (self *ApiDetailServer) Add(model *models.ApiDetailModel) (int64, error) {
+func (this *ApiDetailServer) Add(model *models.ApiDetailModel) (int64, error) {
 	return orm.NewOrm().Insert(model)
 }
 
 //更新一条ApiDetailModel
-func (self *ApiDetailServer) Update(model *models.ApiDetailModel) error {
+func (this *ApiDetailServer) Update(model *models.ApiDetailModel) error {
 	_, err := orm.NewOrm().Update(model)
 	if err != nil {
 		return err

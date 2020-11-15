@@ -19,6 +19,6 @@ type SetCodeModel struct {
 }
 
 //获取表名称
-func (self *SetCodeModel) TableName() string {
+func (this *SetCodeModel) TableName() string {
 	return TableName("set_code")
 }

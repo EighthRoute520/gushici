@@ -18,6 +18,6 @@ type UcRoleModel struct {
 }
 
 //获取表名称
-func (self *UcRoleModel) TableName() string {
+func (this *UcRoleModel) TableName() string {
 	return TableName("uc_role")
 }

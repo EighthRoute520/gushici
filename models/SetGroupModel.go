@@ -18,6 +18,6 @@ type SetGroupModel struct {
 }
 
 //获取表名称
-func (self *SetGroupModel) TableName() string {
+func (this *SetGroupModel) TableName() string {
 	return TableName("set_group")
 }

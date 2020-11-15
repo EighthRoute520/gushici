@@ -19,6 +19,6 @@ type SetEnvModel struct {
 }
 
 //获取表名称
-func (self *SetEnvModel) TableName() string {
+func (this *SetEnvModel) TableName() string {
 	return TableName("set_env")
 }

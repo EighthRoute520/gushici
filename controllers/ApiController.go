@@ -21,18 +21,18 @@ type ApiController struct {
 }
 
 //显示资源首页
-func (self *ApiController) List() {
-	self.Data["pageTitle"] = "API接口"
-	self.Data["ApiCss"] = true
+func (this *ApiController) List() {
+	this.Data["pageTitle"] = "API接口"
+	this.Data["ApiCss"] = true
 
 	//获取分组列表
-	group_id, _ := self.GetInt("gid", 0)
+	group_id, _ := this.GetInt("gid", 0)
 	//构造分组查询条件
 	filters := make(map[string]interface{})
 	filters["status"] = 1
 	result, _ := (&servers.SetGroupServer{}).GetList(1, 1000, filters)
 	list := (&servers.SetGroupServer{}).DealListData(result)
-	self.Data["Groups"] = list
+	this.Data["Groups"] = list
 
 	//获取Api_source列表
 	filters_source := make(map[string]interface{})
@@ -42,27 +42,27 @@ func (self *ApiController) List() {
 	}
 	result_source, _ := (&servers.ApiSourceServer{}).GetList(1, 1000, filters_source)
 	list_source := (&servers.ApiSourceServer{}).DealListData(result_source)
-	self.Data["Source"] = list_source
+	this.Data["Source"] = list_source
 
-	self.Data["Gid"] = group_id
-	self.display()
+	this.Data["Gid"] = group_id
+	this.display()
 }
 
 //显示所有的接口详情
-func (self *ApiController) Show() {
-	self.Data["ApiCss"] = true
+func (this *ApiController) Show() {
+	this.Data["ApiCss"] = true
 
-	id, _ := self.GetInt("id", 0)
+	id, _ := this.GetInt("id", 0)
 	detail_result, _ := (&servers.ApiDetailServer{}).GetExtensionById(id)
 	list := (&servers.ApiDetailServer{}).DealListData(detail_result)
 
-	self.Data["Detail"] = list
-	self.TplName = "api/info.html"
+	this.Data["Detail"] = list
+	this.TplName = "api/info.html"
 }
 
 //新增资源
-func (self *ApiController) Add() {
-	self.Data["pageTitle"] = "新增资源"
+func (this *ApiController) Add() {
+	this.Data["pageTitle"] = "新增资源"
 
 	//查询条件
 	filters := make(map[string]interface{})
@@ -70,168 +70,168 @@ func (self *ApiController) Add() {
 	result, _ := (&servers.SetGroupServer{}).GetList(1, 1000, filters)
 	list := (&servers.SetGroupServer{}).DealListData(result)
 
-	self.Data["Groups"] = list
-	self.display()
+	this.Data["Groups"] = list
+	this.display()
 }
 
 //编辑资源
-func (self *ApiController) Edit() {
-	self.Data["pageTitle"] = "编辑API"
+func (this *ApiController) Edit() {
+	this.Data["pageTitle"] = "编辑API"
 
 	//获取Source
-	id, _ := self.GetInt("id", 0)
+	id, _ := this.GetInt("id", 0)
 	Api, err := (&servers.ApiSourceServer{}).GetById(id)
 	if err != nil {
-		self.Ctx.WriteString("数据不存在")
+		this.Ctx.WriteString("数据不存在")
 		return
 	}
 	row := (&servers.ApiSourceServer{}).DealOneData(Api)
-	self.Data["Source"] = row
+	this.Data["Source"] = row
 
 	//获取Groups
 	filters := make(map[string]interface{})
 	filters["status"] = 1
 	result, _ := (&servers.SetGroupServer{}).GetList(1, 1000, filters)
 	list := (&servers.SetGroupServer{}).DealListData(result)
-	self.Data["Groups"] = list
+	this.Data["Groups"] = list
 
-	self.display()
+	this.display()
 }
 
 //新增或者编辑资源时，真正的保存
-func (self *ApiController) AjaxSave() {
-	Api_id, _ := self.GetInt("id")
+func (this *ApiController) AjaxSave() {
+	Api_id, _ := this.GetInt("id")
 	Api := new(models.ApiSourceModel)
 	if Api_id != 0 {
 		Api, _ = (&servers.ApiSourceServer{}).GetById(Api_id)
-		Api.UpdateId = self.userId
+		Api.UpdateId = this.userId
 		Api.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 	}
-	Api.SourceName = strings.TrimSpace(self.GetString("source_name"))
-	Api.GroupId, _ = self.GetInt("group_id")
+	Api.SourceName = strings.TrimSpace(this.GetString("source_name"))
+	Api.GroupId, _ = this.GetInt("group_id")
 	Api.Status = 2
 
 	// 检查登录名是否已经存在
 	_, err := (&servers.ApiSourceServer{}).GetByName(Api.SourceName)
 	if err == nil {
-		self.ajaxMsg("资源名已经存在", MSG_ERR)
+		this.ajaxMsg("资源名已经存在", MSG_ERR)
 	}
 
 	if Api_id == 0 {
-		Api.CreateId = self.userId
+		Api.CreateId = this.userId
 		Api.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 		if _, err := (&servers.ApiSourceServer{}).Add(Api); err != nil {
-			self.ajaxMsg(err.Error(), MSG_ERR)
+			this.ajaxMsg(err.Error(), MSG_ERR)
 		}
-		self.ajaxMsg("", MSG_OK)
+		this.ajaxMsg("", MSG_OK)
 	}
 
 	if err := (&servers.ApiSourceServer{}).Update(Api); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
-	self.ajaxMsg("", MSG_OK)
+	this.ajaxMsg("", MSG_OK)
 }
 
 //删除资源
-func (self *ApiController) AjaxDel() {
-	Api_id, _ := self.GetInt("id")
+func (this *ApiController) AjaxDel() {
+	Api_id, _ := this.GetInt("id")
 	Api, _ := (&servers.ApiSourceServer{}).GetById(Api_id)
 	Api.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
-	Api.UpdateId = self.userId
+	Api.UpdateId = this.userId
 	Api.Status = 0
 	Api.Id = Api_id
 
 	if err := (&servers.ApiSourceServer{}).Update(Api); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
-	self.ajaxMsg("", MSG_OK)
+	this.ajaxMsg("", MSG_OK)
 }
 
 //新增接口(API)
-func (self *ApiController) AddApi() {
-	self.Data["pageTitle"] = ""
+func (this *ApiController) AddApi() {
+	this.Data["pageTitle"] = ""
 
-	source_id, _ := self.GetInt("sid")
-	self.Data["Sid"] = source_id
+	source_id, _ := this.GetInt("sid")
+	this.Data["Sid"] = source_id
 
 	//查询条件
-	self.display()
+	this.display()
 }
 
 //编辑接口(API)
-func (self *ApiController) EditApi() {
-	id, _ := self.GetInt("id", 0)
+func (this *ApiController) EditApi() {
+	id, _ := this.GetInt("id", 0)
 	detail, _ := (&servers.ApiDetailServer{}).GetById(id)
 	params, _ := (&servers.ApiParamServer{}).GetById(detail.Id)
-	self.Data["Detail"] = detail
-	self.Data["Params"] = params
-	self.Data["ParamsCount"] = len(params)
-	self.display()
+	this.Data["Detail"] = detail
+	this.Data["Params"] = params
+	this.Data["ParamsCount"] = len(params)
+	this.display()
 }
 
 //新增或者编辑接口(API)时，真正的保存
-func (self *ApiController) AjaxApiSave() {
-	Api_id, _ := self.GetInt("id")
+func (this *ApiController) AjaxApiSave() {
+	Api_id, _ := this.GetInt("id")
 	ApiDetail := new(models.ApiDetailModel)
 	if Api_id != 0 {
 		ApiDetail, _ = (&servers.ApiDetailServer{}).GetById(Api_id)
 	}
 
-	ApiDetail.SourceId, _ = self.GetInt("source_id")
-	ApiDetail.ProtocolType, _ = self.GetInt("protocol_type")
-	ApiDetail.Method, _ = self.GetInt("method")
-	ApiDetail.ApiName = strings.TrimSpace(self.GetString("api_name"))
-	ApiDetail.ApiUrl = strings.TrimSpace(self.GetString("api_url"))
-	ApiDetail.Result = strings.TrimSpace(self.GetString("result"))
-	ApiDetail.Example = strings.TrimSpace(self.GetString("example"))
-	ApiDetail.Detail = strings.TrimSpace(self.GetString("detail"))
-	ApiDetail.UpdateId = self.userId
+	ApiDetail.SourceId, _ = this.GetInt("source_id")
+	ApiDetail.ProtocolType, _ = this.GetInt("protocol_type")
+	ApiDetail.Method, _ = this.GetInt("method")
+	ApiDetail.ApiName = strings.TrimSpace(this.GetString("api_name"))
+	ApiDetail.ApiUrl = strings.TrimSpace(this.GetString("api_url"))
+	ApiDetail.Result = strings.TrimSpace(this.GetString("result"))
+	ApiDetail.Example = strings.TrimSpace(this.GetString("example"))
+	ApiDetail.Detail = strings.TrimSpace(this.GetString("detail"))
+	ApiDetail.UpdateId = this.userId
 	ApiDetail.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 	ApiDetail.Status = 1
 
 	//新增
 	if Api_id == 0 {
-		ApiDetail.CreateId = self.userId
+		ApiDetail.CreateId = this.userId
 		ApiDetail.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 		detail_id, err := (&servers.ApiDetailServer{}).Add(ApiDetail)
 		if err != nil {
-			self.ajaxMsg(err.Error(), MSG_ERR)
+			this.ajaxMsg(err.Error(), MSG_ERR)
 		}
 
 		//批量增加ApiParamModel
-		err = self.batchAdd4Form(int(detail_id))
+		err = this.batchAdd4Form(int(detail_id))
 		if err != nil {
-			self.ajaxMsg(err.Error(), MSG_ERR)
+			this.ajaxMsg(err.Error(), MSG_ERR)
 		}
 
-		self.ajaxMsg("", MSG_OK)
+		this.ajaxMsg("", MSG_OK)
 	}
 
 	//修改
 	ApiDetail.Id = Api_id
-	ApiDetail.Status, _ = self.GetInt("status")
+	ApiDetail.Status, _ = this.GetInt("status")
 	if err := (&servers.ApiDetailServer{}).Update(ApiDetail); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
 
 	//先删除后新增参数
-	if _, err := (&servers.ApiParamServer{}).Delete(int64(Api_id), self.userId); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+	if _, err := (&servers.ApiParamServer{}).Delete(int64(Api_id), this.userId); err != nil {
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
 
 	//批量增加ApiParamModel
-	err := self.batchAdd4Form(Api_id)
+	err := this.batchAdd4Form(Api_id)
 	if err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
 
-	self.ajaxMsg("", MSG_OK)
+	this.ajaxMsg("", MSG_OK)
 }
 
 //批量增加ApiParamModel
-func (self *ApiController) batchAdd4Form(Api_id int) error {
+func (this *ApiController) batchAdd4Form(Api_id int) error {
 	params := make(map[int]map[string]string)
-	for k, v := range self.Ctx.Request.Form {
+	for k, v := range this.Ctx.Request.Form {
 		if strings.Contains(k, "attr_") == true {
 			ks := strings.Split(k, "_")
 			i, _ := strconv.Atoi(ks[1])
@@ -255,8 +255,8 @@ func (self *ApiController) batchAdd4Form(Api_id int) error {
 		apiParam.ApiDetail = vv["detail"]
 		apiParam.IsNull = vv["isnull"]
 		apiParam.DetailId = Api_id
-		apiParam.CreateId = self.userId
-		apiParam.UpdateId = self.userId
+		apiParam.CreateId = this.userId
+		apiParam.UpdateId = this.userId
 		apiParam.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 		apiParam.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 		apiParam.Status = 1

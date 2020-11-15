@@ -20,8 +20,8 @@ type InfoClassController struct {
 }
 
 //资讯管理首页
-func (self *InfoClassController) List() {
-	class_id, _ := self.GetInt("class_id")
+func (this *InfoClassController) List() {
+	class_id, _ := this.GetInt("class_id")
 	filters := make(map[string]interface{})
 	filters["status"] = 1
 	result, count := (&servers.InfoClassServer{}).GetList(1, 10, filters)
@@ -36,14 +36,14 @@ func (self *InfoClassController) List() {
 		row["count"] = count
 		classList[k] = row
 	}
-	self.Data["pageTitle"] = "资讯管理"
-	self.Data["news_class"] = classList
-	self.Data["class_id"] = class_id
-	self.display()
+	this.Data["pageTitle"] = "资讯管理"
+	this.Data["news_class"] = classList
+	this.Data["class_id"] = class_id
+	this.display()
 }
 
 //新增资讯
-func (self *InfoClassController) Add() {
+func (this *InfoClassController) Add() {
 	filters := make(map[string]interface{})
 	filters["status"] = 1
 	result, count := (&servers.InfoClassServer{}).GetList(1, 20, filters)
@@ -58,14 +58,14 @@ func (self *InfoClassController) Add() {
 		row["count"] = count
 		list[k] = row
 	}
-	self.Data["pageTitle"] = "新增资讯"
-	self.Data["news_class"] = list
-	self.display()
+	this.Data["pageTitle"] = "新增资讯"
+	this.Data["news_class"] = list
+	this.display()
 }
 
 //修改资讯
-func (self *InfoClassController) Edit() {
-	id, _ := self.GetInt("id")
+func (this *InfoClassController) Edit() {
+	id, _ := this.GetInt("id")
 	infoListModel, _ := (&servers.InfoListServer{}).GetOneById(id)
 	infoRow := make(map[string]interface{})
 	infoRow["id"] = infoListModel.Id
@@ -96,74 +96,74 @@ func (self *InfoClassController) Edit() {
 		classList[k] = row
 	}
 
-	self.Data["pageTitle"] = "编辑资讯"
-	self.Data["news_class"] = classList
-	self.Data["news"] = infoRow
-	self.display()
+	this.Data["pageTitle"] = "编辑资讯"
+	this.Data["news_class"] = classList
+	this.Data["news"] = infoRow
+	this.display()
 }
 
 //Ajax删除
-func (self *InfoClassController) AjaxDel() {
-	id, _ := self.GetInt("id")
+func (this *InfoClassController) AjaxDel() {
+	id, _ := this.GetInt("id")
 	infoListModel, _ := (&servers.InfoListServer{}).GetOneById(id)
 	infoListModel.Status = 2
 	infoListModel.Id = id
 	infoListModel.UpdateTime = beego.Date(time.Now(), "Y-m-d H:i:s")
 	err := (&servers.InfoListServer{}).Update(infoListModel)
 	if err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
-	self.ajaxMsg("删除成功", MSG_OK)
+	this.ajaxMsg("删除成功", MSG_OK)
 }
 
 //Ajax新增保存
-func (self *InfoClassController) AjaxSave() {
-	id, _ := self.GetInt("id")
-	classId, _ := self.GetInt("class_id")
-	orderid, _ := self.GetInt("orderid")
+func (this *InfoClassController) AjaxSave() {
+	id, _ := this.GetInt("id")
+	classId, _ := this.GetInt("class_id")
+	orderid, _ := this.GetInt("orderid")
 
 	infoListModel := new(models.InfoListModel)
 	if id != 0 {
 		infoListModel, _ = (&servers.InfoListServer{}).GetOneById(id)
 	}
-	infoListModel.Title = strings.TrimSpace(self.GetString("title"))
-	infoListModel.Author = strings.TrimSpace(self.GetString("author"))
-	infoListModel.Keywords = strings.TrimSpace(self.GetString("keywords"))
-	infoListModel.Used, _ = self.GetInt("used")
-	infoListModel.Desc = strings.TrimSpace(self.GetString("desc"))
-	infoListModel.Content = strings.TrimSpace(self.GetString("content"))
+	infoListModel.Title = strings.TrimSpace(this.GetString("title"))
+	infoListModel.Author = strings.TrimSpace(this.GetString("author"))
+	infoListModel.Keywords = strings.TrimSpace(this.GetString("keywords"))
+	infoListModel.Used, _ = this.GetInt("used")
+	infoListModel.Desc = strings.TrimSpace(this.GetString("desc"))
+	infoListModel.Content = strings.TrimSpace(this.GetString("content"))
 	infoListModel.ClassId = classId
 	infoListModel.OrderId = orderid
 	infoListModel.UpdateTime = beego.Date(time.Now(), "Y-m-d H:i:s")
-	infoListModel.PicUrl = strings.TrimSpace(self.GetString("pic_url"))
-	infoListModel.Media = strings.TrimSpace(self.GetString("media"))
+	infoListModel.PicUrl = strings.TrimSpace(this.GetString("pic_url"))
+	infoListModel.Media = strings.TrimSpace(this.GetString("media"))
 	infoListModel.Status = 1
 	if id == 0 {
 		infoListModel.PostTime = beego.Date(time.Now(), "Y-m-d H:i:s")
 		if _, err := (&servers.InfoListServer{}).Add(infoListModel); err != nil {
-			self.ajaxMsg(err.Error(), MSG_ERR)
+			this.ajaxMsg(err.Error(), MSG_ERR)
 		}
-		self.ajaxMsg("", MSG_OK)
+		this.ajaxMsg("", MSG_OK)
 	}
 	if err := (&servers.InfoListServer{}).Update(infoListModel); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
-	self.ajaxMsg("操作成功", MSG_OK)
+	this.ajaxMsg("操作成功", MSG_OK)
 }
 
 //表格显示列表信息
-func (self *InfoClassController) Table() {
-	page, err := self.GetInt("page")
+func (this *InfoClassController) Table() {
+	page, err := this.GetInt("page")
 	if err != nil {
 		page = 1
 	}
-	limit, err := self.GetInt("limit")
+	limit, err := this.GetInt("limit")
 	if err != nil {
 		limit = 30
 	}
 	filters := make(map[string]interface{})
 	filters["status"] = 1
-	class_id, _ := self.GetInt("class_id")
+	class_id, _ := this.GetInt("class_id")
 	if class_id > 0 {
 		filters["class_id"] = class_id
 	}
@@ -183,18 +183,18 @@ func (self *InfoClassController) Table() {
 		row["posttime"] = v.PostTime
 		list[k] = row
 	}
-	self.ajaxList("成功", MSG_OK, count, list)
+	this.ajaxList("成功", MSG_OK, count, list)
 }
 
 //上传图片
-func (self *InfoClassController) Upload() {
+func (this *InfoClassController) Upload() {
 	filepath := "static/upload/" + beego.Date(time.Now(), "Y-m-d") + "/"
 	_, err := os.Stat(filepath)
 	if err != nil {
 		err = os.Mkdir(filepath, 0777)
 		if err != nil {
-			self.ajaxMsg("上传失败", MSG_ERR)
+			this.ajaxMsg("上传失败", MSG_ERR)
 		}
 	}
-	self.UploadFile("upfile", filepath)
+	this.UploadFile("upfile", filepath)
 }

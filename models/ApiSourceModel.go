@@ -20,6 +20,6 @@ type ApiSourceModel struct {
 }
 
 //获取表名称
-func (self *ApiSourceModel) TableName() string {
+func (this *ApiSourceModel) TableName() string {
 	return TableName("api_source")
 }

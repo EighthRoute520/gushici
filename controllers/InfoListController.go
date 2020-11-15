@@ -15,7 +15,7 @@ type InfoListController struct {
 }
 
 //首页
-func (self *InfoListController) Index() {
+func (this *InfoListController) Index() {
 	infoListServer := new(servers.InfoListServer)
 	//开心儿歌
 	filters := make(map[string]interface{})
@@ -52,15 +52,15 @@ func (self *InfoListController) Index() {
 	out["list3"] = list3
 	out["list4"] = list4
 	out["class_id"] = 0
-	self.Data["data"] = out
-	self.Layout = "public/www_layout.html"
-	self.display()
+	this.Data["data"] = out
+	this.Layout = "public/www_layout.html"
+	this.display()
 }
 
 //显示详情
-func (self *InfoListController) Show() {
+func (this *InfoListController) Show() {
 	infoListServer := new(servers.InfoListServer)
-	id, _ := self.GetInt(":id")
+	id, _ := this.GetInt(":id")
 	//当前详情
 	infoListModel, _ := infoListServer.GetOneById(id)
 	row := infoListServer.DealOneData(infoListModel)
@@ -80,25 +80,25 @@ func (self *InfoListController) Show() {
 	}
 
 	row["next"] = nextRow
-	self.Data["data"] = row
-	self.Layout = "public/www_layout.html"
-	self.display()
+	this.Data["data"] = row
+	this.Layout = "public/www_layout.html"
+	this.display()
 }
 
 //列表
-func (self *InfoListController) List() {
+func (this *InfoListController) List() {
 	infoListServer := new(servers.InfoListServer)
-	page, err := self.GetInt("page")
+	page, err := this.GetInt("page")
 	if err != nil {
 		page = 1
 	}
-	limit, err := self.GetInt("limit")
+	limit, err := this.GetInt("limit")
 	if err != nil {
 		limit = 16
 	}
 
 	//查询条件
-	classId, err := self.GetInt(":class_id")
+	classId, err := this.GetInt(":class_id")
 	filters := make(map[string]interface{})
 	filters["status"] = 1
 	if err == nil {
@@ -117,8 +117,8 @@ func (self *InfoListController) List() {
 	out["class_name"] = classMap[classId]
 	out["title"] = classMap[classId]
 	out["list"] = list
-	self.Data["data"] = out
+	this.Data["data"] = out
 
-	self.Layout = "public/www_layout.html"
-	self.display()
+	this.Layout = "public/www_layout.html"
+	this.display()
 }

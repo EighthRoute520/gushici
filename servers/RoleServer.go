@@ -14,7 +14,7 @@ import (
 type RoleServer struct{}
 
 //获取多条UcRoleModel
-func (self *RoleServer) GetList(page, pageSize int, filters map[string]interface{}) ([]*models.UcRoleModel, int64) {
+func (this *RoleServer) GetList(page, pageSize int, filters map[string]interface{}) ([]*models.UcRoleModel, int64) {
 	offset := (page - 1) * pageSize
 	list := make([]*models.UcRoleModel, 0)
 	query := orm.NewOrm().QueryTable((&models.UcRoleModel{}).TableName())
@@ -30,18 +30,18 @@ func (self *RoleServer) GetList(page, pageSize int, filters map[string]interface
 }
 
 //处理多条数据返回给前端
-func (self *RoleServer) DealListData(models []*models.UcRoleModel) []map[string]interface{} {
+func (this *RoleServer) DealListData(models []*models.UcRoleModel) []map[string]interface{} {
 	count := len(models)
 	list := make([]map[string]interface{}, count)
 	for k, v := range models {
-		row := self.DealOneData(v)
+		row := this.DealOneData(v)
 		list[k] = row
 	}
 	return list
 }
 
 //处理一条数据返回给前端
-func (self *RoleServer) DealOneData(model *models.UcRoleModel) map[string]interface{} {
+func (this *RoleServer) DealOneData(model *models.UcRoleModel) map[string]interface{} {
 	row := make(map[string]interface{})
 	row["id"] = model.Id
 	row["role_name"] = model.RoleName
@@ -52,7 +52,7 @@ func (self *RoleServer) DealOneData(model *models.UcRoleModel) map[string]interf
 }
 
 //根据ID获取一条UcRoleModel数据
-func (self *RoleServer) GetById(id int) (*models.UcRoleModel, error) {
+func (this *RoleServer) GetById(id int) (*models.UcRoleModel, error) {
 	model := new(models.UcRoleModel)
 	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
 	if err != nil {
@@ -62,7 +62,7 @@ func (self *RoleServer) GetById(id int) (*models.UcRoleModel, error) {
 }
 
 //增加一条UcRoleModel数据
-func (self *RoleServer) Add(model *models.UcRoleModel) (int64, error) {
+func (this *RoleServer) Add(model *models.UcRoleModel) (int64, error) {
 	id, err := orm.NewOrm().Insert(model)
 	if err != nil {
 		return 0, err
@@ -71,7 +71,7 @@ func (self *RoleServer) Add(model *models.UcRoleModel) (int64, error) {
 }
 
 //更新一条UcRoleModel数据
-func (self *RoleServer) Update(model *models.UcRoleModel) error {
+func (this *RoleServer) Update(model *models.UcRoleModel) error {
 	if _, err := orm.NewOrm().Update(model); err != nil {
 		return err
 	}

@@ -14,7 +14,7 @@ import (
 type AdminServer struct{}
 
 //获取多条UcAdminModel
-func (self *AdminServer) GetList(page, pageSize int, filters map[string]interface{}) ([]*models.UcAdminModel, int64) {
+func (this *AdminServer) GetList(page, pageSize int, filters map[string]interface{}) ([]*models.UcAdminModel, int64) {
 	offset := (page - 1) * pageSize
 	list := make([]*models.UcAdminModel, 0)
 	query := orm.NewOrm().QueryTable((&models.UcAdminModel{}).TableName())
@@ -30,18 +30,18 @@ func (self *AdminServer) GetList(page, pageSize int, filters map[string]interfac
 }
 
 //处理多条数据返回给前端
-func (self *AdminServer) DealListData(models []*models.UcAdminModel) []map[string]interface{} {
+func (this *AdminServer) DealListData(models []*models.UcAdminModel) []map[string]interface{} {
 	count := len(models)
 	list := make([]map[string]interface{}, count)
 	for k, v := range models {
-		row := self.DealOneData(v)
+		row := this.DealOneData(v)
 		list[k] = row
 	}
 	return list
 }
 
 //处理一条数据返回给前端
-func (self *AdminServer) DealOneData(model *models.UcAdminModel) map[string]interface{} {
+func (this *AdminServer) DealOneData(model *models.UcAdminModel) map[string]interface{} {
 	row := make(map[string]interface{})
 	row["id"] = model.Id
 	row["login_name"] = model.LoginName
@@ -55,7 +55,7 @@ func (self *AdminServer) DealOneData(model *models.UcAdminModel) map[string]inte
 }
 
 //根据id获取AdminModel
-func (self *AdminServer) GetById(id int) (*models.UcAdminModel, error) {
+func (this *AdminServer) GetById(id int) (*models.UcAdminModel, error) {
 	model := new(models.UcAdminModel)
 	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
 	if err != nil {
@@ -65,7 +65,7 @@ func (self *AdminServer) GetById(id int) (*models.UcAdminModel, error) {
 }
 
 //根据login_name获取UcAdminModel
-func (self *AdminServer) GetByName(name string) (*models.UcAdminModel, error) {
+func (this *AdminServer) GetByName(name string) (*models.UcAdminModel, error) {
 	model := new(models.UcAdminModel)
 	err := orm.NewOrm().QueryTable(model.TableName()).Filter("login_name", name).One(model)
 	if err != nil {
@@ -75,12 +75,12 @@ func (self *AdminServer) GetByName(name string) (*models.UcAdminModel, error) {
 }
 
 //新增UcAdminModel
-func (self *AdminServer) Add(model *models.UcAdminModel) (int64, error) {
+func (this *AdminServer) Add(model *models.UcAdminModel) (int64, error) {
 	return orm.NewOrm().Insert(model)
 }
 
 //更新UcAdminModel
-func (self *AdminServer) Update(model *models.UcAdminModel) error {
+func (this *AdminServer) Update(model *models.UcAdminModel) error {
 	_, err := orm.NewOrm().Update(model)
 	if err != nil {
 		return err

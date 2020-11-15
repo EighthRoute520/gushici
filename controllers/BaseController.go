@@ -36,68 +36,68 @@ type BaseController struct {
 }
 
 //前期准备：重写父类方法，实现数据初始化
-func (self *BaseController) Prepare() {
-	self.pageSize = 20
+func (this *BaseController) Prepare() {
+	this.pageSize = 20
 	//获取控制器名称和对应的方法
-	controllerName, actionName := self.GetControllerAndAction()
-	self.controllerName = libs.LcFirst(controllerName[0 : len(controllerName)-10])
-	self.actionName = libs.LcFirst(actionName)
-	self.Data["version"] = beego.AppConfig.String("version")
-	self.Data["siteName"] = beego.AppConfig.String("site.name")
-	self.Data["curRoute"] = self.controllerName + self.actionName //拼装路由
-	self.Data["curController"] = self.controllerName
-	self.Data["curAction"] = self.actionName
+	controllerName, actionName := this.GetControllerAndAction()
+	this.controllerName = libs.LcFirst(controllerName[0 : len(controllerName)-10])
+	this.actionName = libs.LcFirst(actionName)
+	this.Data["version"] = beego.AppConfig.String("version")
+	this.Data["siteName"] = beego.AppConfig.String("site.name")
+	this.Data["curRoute"] = this.controllerName + this.actionName //拼装路由
+	this.Data["curController"] = this.controllerName
+	this.Data["curAction"] = this.actionName
 	noAuth := "ads,wxApi,infoList"
-	isNoAuth := strings.Contains(noAuth, self.controllerName)
+	isNoAuth := strings.Contains(noAuth, this.controllerName)
 	if isNoAuth == false {
-		self.auth()
+		this.auth()
 	}
-	self.Data["loginUserId"] = self.userId
-	self.Data["loginUserName"] = self.userName
+	this.Data["loginUserId"] = this.userId
+	this.Data["loginUserName"] = this.userName
 }
 
 //登录权限验证
-func (self *BaseController) auth() {
-	arr := strings.Split(self.Ctx.GetCookie("auth"), "|")
-	self.userId = 0
+func (this *BaseController) auth() {
+	arr := strings.Split(this.Ctx.GetCookie("auth"), "|")
+	this.userId = 0
 	if len(arr) == 2 {
 		idstr, password := arr[0], arr[1]
 		userId, _ := strconv.Atoi(idstr)
 		if userId > 0 {
 			user, err := (&servers.AdminServer{}).GetById(userId)
-			if err == nil && password == libs.Md5([]byte(self.getClientIp()+"|"+user.Password+user.Salt)) {
-				self.userId = user.Id
-				self.loginName = user.LoginName
-				self.userName = user.RealName
-				self.user = user
-				self.AdminAuth()
+			if err == nil && password == libs.Md5([]byte(this.getClientIp()+"|"+user.Password+user.Salt)) {
+				this.userId = user.Id
+				this.loginName = user.LoginName
+				this.userName = user.RealName
+				this.user = user
+				this.AdminAuth()
 			}
-			url := self.controllerName + "/" + self.actionName
-			isHasAuth := strings.Contains(self.allowUrl, url)
+			url := this.controllerName + "/" + this.actionName
+			isHasAuth := strings.Contains(this.allowUrl, url)
 			noAuth := "ajaxSave/ajaxDel/table/login/logout/getnodes/start/show/ajaxapisave"
-			isNoAuth := strings.Contains(noAuth, self.actionName)
-			beego.Info(1111, url, self.allowUrl, isHasAuth, noAuth, isNoAuth)
+			isNoAuth := strings.Contains(noAuth, this.actionName)
+			beego.Info(1111, url, this.allowUrl, isHasAuth, noAuth, isNoAuth)
 			if isHasAuth == false && isNoAuth == false {
-				self.Ctx.WriteString("没有权限")
-				self.ajaxMsg("没有权限", MSG_ERR)
+				this.Ctx.WriteString("没有权限")
+				this.ajaxMsg("没有权限", MSG_ERR)
 				return
 			}
 		}
 	}
 
-	if self.userId == 0 && (self.controllerName != "login" && self.actionName != "login") {
-		self.redirect(beego.URLFor("LoginController.Login"))
+	if this.userId == 0 && (this.controllerName != "login" && this.actionName != "login") {
+		this.redirect(beego.URLFor("LoginController.Login"))
 	}
 }
 
 //管理员验证
-func (self *BaseController) AdminAuth() {
+func (this *BaseController) AdminAuth() {
 	// 左侧导航栏
 	filters := make(map[string]interface{})
 	filters["status"] = 1
-	if self.userId != 1 {
+	if this.userId != 1 {
 		//普通管理员
-		adminAuthIds, _ := (&servers.RoleAuthServer{}).GetByIds(self.user.RoleIds)
+		adminAuthIds, _ := (&servers.RoleAuthServer{}).GetByIds(this.user.RoleIds)
 		adminAuthIdArr := strings.Split(adminAuthIds, ",")
 		filters["id__in"] = adminAuthIdArr
 	}
@@ -133,65 +133,65 @@ func (self *BaseController) AdminAuth() {
 		}
 	}
 
-	self.Data["SideMenu1"] = list[:i]  //一级菜单
-	self.Data["SideMenu2"] = list2[:j] //二级菜单
-	self.allowUrl = allow_url + "/home/index"
+	this.Data["SideMenu1"] = list[:i]  //一级菜单
+	this.Data["SideMenu2"] = list2[:j] //二级菜单
+	this.allowUrl = allow_url + "/home/index"
 }
 
 // 是否POST提交
-func (self *BaseController) isPost() bool {
-	return self.Ctx.Request.Method == "POST"
+func (this *BaseController) isPost() bool {
+	return this.Ctx.Request.Method == "POST"
 }
 
 //获取用户IP地址
-func (self *BaseController) getClientIp() string {
-	s := strings.Split(self.Ctx.Request.RemoteAddr, ":")
+func (this *BaseController) getClientIp() string {
+	s := strings.Split(this.Ctx.Request.RemoteAddr, ":")
 	return s[0]
 }
 
 // 重定向
-func (self *BaseController) redirect(url string) {
-	self.Redirect(url, 302)
-	self.StopRun()
+func (this *BaseController) redirect(url string) {
+	this.Redirect(url, 302)
+	this.StopRun()
 }
 
 //利用规则，找到对应的视图，然后显示
-func (self *BaseController) display() {
-	tplname := self.controllerName + "/" + self.actionName + ".html"
-	if !self.noLayout {
-		if self.Layout == "" {
-			self.Layout = "public/layout.html"
+func (this *BaseController) display() {
+	tplname := this.controllerName + "/" + this.actionName + ".html"
+	if !this.noLayout {
+		if this.Layout == "" {
+			this.Layout = "public/layout.html"
 		}
 	}
-	self.TplName = tplname
+	this.TplName = tplname
 	beego.Info(22222, tplname)
 }
 
 //ajax返回信息给前端
-func (self *BaseController) ajaxMsg(msg interface{}, msgno int) {
+func (this *BaseController) ajaxMsg(msg interface{}, msgno int) {
 	out := make(map[string]interface{})
 	out["status"] = msgno
 	out["message"] = msg
-	self.Data["json"] = out
-	self.ServeJSON()
-	self.StopRun()
+	this.Data["json"] = out
+	this.ServeJSON()
+	this.StopRun()
 }
 
 //ajax返回 列表数据
-func (self *BaseController) ajaxList(msg interface{}, msgno int, count int64, data interface{}) {
+func (this *BaseController) ajaxList(msg interface{}, msgno int, count int64, data interface{}) {
 	out := make(map[string]interface{})
 	out["code"] = msgno
 	out["msg"] = msg
 	out["count"] = count
 	out["data"] = data
-	self.Data["json"] = out
-	self.ServeJSON()
-	self.StopRun()
+	this.Data["json"] = out
+	this.ServeJSON()
+	this.StopRun()
 }
 
 //上传图片
-func (self *BaseController) UploadFile(filename string, filepath string) {
-	f, h, err := self.GetFile(filename)
+func (this *BaseController) UploadFile(filename string, filepath string) {
+	f, h, err := this.GetFile(filename)
 	out := make(map[string]interface{})
 	if err != nil {
 		out["msg"] = "文件读取错误"
@@ -199,7 +199,7 @@ func (self *BaseController) UploadFile(filename string, filepath string) {
 	var fileSuffix, newFile string
 	fileSuffix = path.Ext(h.Filename)
 	newFile = libs.GetRandomString(8) + fileSuffix
-	err = self.SaveToFile("upfile", filepath+newFile)
+	err = this.SaveToFile("upfile", filepath+newFile)
 	if err != nil {
 		out["msg"] = "文件保存错误"
 	}
@@ -210,7 +210,7 @@ func (self *BaseController) UploadFile(filename string, filepath string) {
 	out["original"] = h.Filename
 	out["size"] = h.Size
 	out["msg"] = "ok"
-	self.Data["json"] = out
-	self.ServeJSON()
-	self.StopRun()
+	this.Data["json"] = out
+	this.ServeJSON()
+	this.StopRun()
 }

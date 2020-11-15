@@ -15,7 +15,7 @@ import (
 type InfoClassServer struct{}
 
 //获取多条InfoClassModel
-func (self *InfoClassServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.InfoClassModel, int64) {
+func (this *InfoClassServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.InfoClassModel, int64) {
 	offset := (page - 1) * pageSize
 	list := make([]*models.InfoClassModel, 0)
 	query := orm.NewOrm().QueryTable((&models.InfoClassModel{}).TableName())
@@ -30,7 +30,7 @@ func (self *InfoClassServer) GetList(page int, pageSize int, filters map[string]
 }
 
 //处理多条InfoClassModel返回调用者
-func (self *InfoClassServer) DealListData(result []*models.InfoClassModel) map[int]string {
+func (this *InfoClassServer) DealListData(result []*models.InfoClassModel) map[int]string {
 	classMap := make(map[int]string)
 	for _, v := range result {
 		classMap[v.Id] = v.ClassName
@@ -39,7 +39,7 @@ func (self *InfoClassServer) DealListData(result []*models.InfoClassModel) map[i
 }
 
 //新增一条InfoClassModel
-func (self *InfoClassServer) Add(model *models.InfoClassModel) (int64, error) {
+func (this *InfoClassServer) Add(model *models.InfoClassModel) (int64, error) {
 	id, err := orm.NewOrm().Insert(model)
 	if err != nil {
 		return 0, err
@@ -48,7 +48,7 @@ func (self *InfoClassServer) Add(model *models.InfoClassModel) (int64, error) {
 }
 
 //根据id获取InfoClassModel
-func (self *InfoClassServer) GetById(id int) (*models.InfoClassModel, error) {
+func (this *InfoClassServer) GetById(id int) (*models.InfoClassModel, error) {
 	model := new(models.InfoClassModel)
 	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
 	if err != nil {
@@ -58,7 +58,7 @@ func (self *InfoClassServer) GetById(id int) (*models.InfoClassModel, error) {
 }
 
 //更新InfoClassModel
-func (self *InfoClassServer) Update(model *models.InfoClassModel) error {
+func (this *InfoClassServer) Update(model *models.InfoClassModel) error {
 	_, err := orm.NewOrm().Update(model)
 	if err != nil {
 		return err

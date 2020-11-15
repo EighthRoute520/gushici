@@ -17,7 +17,7 @@ import (
 type InfoListServer struct{}
 
 //获取多条InFoListModel信息
-func (self *InfoListServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.InfoListModel, int64) {
+func (this *InfoListServer) GetList(page int, pageSize int, filters map[string]interface{}) ([]*models.InfoListModel, int64) {
 	offset := (page - 1) * pageSize
 	list := make([]*models.InfoListModel, 0)
 	query := orm.NewOrm().QueryTable((&models.InfoListModel{}).TableName())
@@ -32,18 +32,18 @@ func (self *InfoListServer) GetList(page int, pageSize int, filters map[string]i
 }
 
 //处理多条数据返回给前端
-func (self *InfoListServer) DealListData(models []*models.InfoListModel) []map[string]interface{} {
+func (this *InfoListServer) DealListData(models []*models.InfoListModel) []map[string]interface{} {
 	count := len(models)
 	list := make([]map[string]interface{}, count)
 	for k, v := range models {
-		row := self.DealOneData(v)
+		row := this.DealOneData(v)
 		list[k] = row
 	}
 	return list
 }
 
 //处理一条数据返回给前端
-func (self *InfoListServer) DealOneData(model *models.InfoListModel) map[string]interface{} {
+func (this *InfoListServer) DealOneData(model *models.InfoListModel) map[string]interface{} {
 	row := make(map[string]interface{})
 	row["id"] = model.Id
 	row["title"] = model.Title
@@ -72,7 +72,7 @@ func (self *InfoListServer) DealOneData(model *models.InfoListModel) map[string]
 }
 
 //获取一条InfoListModel数据
-func (self *InfoListServer) GetOneById(id int) (*models.InfoListModel, error) {
+func (this *InfoListServer) GetOneById(id int) (*models.InfoListModel, error) {
 	model := new(models.InfoListModel)
 	err := orm.NewOrm().QueryTable(model.TableName()).Filter("id", id).One(model)
 	if err != nil {
@@ -82,7 +82,7 @@ func (self *InfoListServer) GetOneById(id int) (*models.InfoListModel, error) {
 }
 
 //获取下一条InfoListModel数据
-func (self *InfoListServer) GetNextOneById(id int) (*models.InfoListModel, error) {
+func (this *InfoListServer) GetNextOneById(id int) (*models.InfoListModel, error) {
 	model := new(models.InfoListModel)
 	sql := fmt.Sprintf("select id,title from "+model.TableName()+
 		" where status=1 and id < %d order by id desc limit 1", id)
@@ -95,12 +95,12 @@ func (self *InfoListServer) GetNextOneById(id int) (*models.InfoListModel, error
 }
 
 //增加一条InfoListModel数据
-func (self *InfoListServer) Add(model *models.InfoListModel) (int64, error) {
+func (this *InfoListServer) Add(model *models.InfoListModel) (int64, error) {
 	return orm.NewOrm().Insert(model)
 }
 
 //更新一条InfoListModel数据
-func (self *InfoListServer) Update(model *models.InfoListModel) error {
+func (this *InfoListServer) Update(model *models.InfoListModel) error {
 	_, err := orm.NewOrm().Update(model)
 	if err != nil {
 		return err

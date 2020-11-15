@@ -12,6 +12,6 @@ type UcRoleAuthModel struct {
 }
 
 //获取表名称
-func (self *UcRoleAuthModel) TableName() string {
+func (this *UcRoleAuthModel) TableName() string {
 	return TableName("uc_role_auth")
 }

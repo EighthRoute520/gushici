@@ -11,24 +11,24 @@ type AdsController struct {
 }
 
 //首页
-func (self *AdsController) Index() {
-	self.Data["siteName"] = "测试使用Index"
-	self.Data["pageTitle"] = "测试使用Index"
-	self.display()
+func (this *AdsController) Index() {
+	this.Data["siteName"] = "测试使用Index"
+	this.Data["pageTitle"] = "测试使用Index"
+	this.display()
 }
 
 //显示详情
-func (self *AdsController) Show() {
-	self.Data["siteName"] = "测试使用Show"
-	self.Data["pageTitle"] = "测试使用Show"
-	self.TplName = "ads/show.html"
-	self.display()
+func (this *AdsController) Show() {
+	this.Data["siteName"] = "测试使用Show"
+	this.Data["pageTitle"] = "测试使用Show"
+	this.TplName = "ads/show.html"
+	this.display()
 }
 
 //显示图片
-func (self *AdsController) ImageShow() {
-	self.Data["siteName"] = "测试使用ImageShow"
-	self.Data["pageTitle"] = "测试使用ImageShow"
-	self.TplName = "ads/imagesshow.html"
-	self.display()
+func (this *AdsController) ImageShow() {
+	this.Data["siteName"] = "测试使用ImageShow"
+	this.Data["pageTitle"] = "测试使用ImageShow"
+	this.TplName = "ads/imagesshow.html"
+	this.display()
 }

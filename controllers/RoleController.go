@@ -21,27 +21,27 @@ type RoleController struct {
 }
 
 //首页
-func (self *RoleController) List() {
-	self.Data["pageTitle"] = "角色管理"
-	self.display()
+func (this *RoleController) List() {
+	this.Data["pageTitle"] = "角色管理"
+	this.display()
 }
 
 //新增页
-func (self *RoleController) Add() {
-	self.Data["zTree"] = true //引入ztreecss
-	self.Data["pageTitle"] = "新增角色"
-	self.display()
+func (this *RoleController) Add() {
+	this.Data["zTree"] = true //引入ztreecss
+	this.Data["pageTitle"] = "新增角色"
+	this.display()
 }
 
 //编辑页
-func (self *RoleController) Edit() {
-	self.Data["zTree"] = true //引入ztreecss
-	self.Data["pageTitle"] = "编辑角色"
+func (this *RoleController) Edit() {
+	this.Data["zTree"] = true //引入ztreecss
+	this.Data["pageTitle"] = "编辑角色"
 
-	id, _ := self.GetInt("id", 0)
+	id, _ := this.GetInt("id", 0)
 	role, _ := (&servers.RoleServer{}).GetById(id)
 	row := (&servers.RoleServer{}).DealOneData(role)
-	self.Data["role"] = row
+	this.Data["role"] = row
 
 	//获取选择的树节点
 	roleAuth, _ := (&servers.RoleAuthServer{}).GetById(id)
@@ -49,19 +49,19 @@ func (self *RoleController) Edit() {
 	for _, v := range roleAuth {
 		authId = append(authId, v.AuthId)
 	}
-	self.Data["auth"] = authId
+	this.Data["auth"] = authId
 	fmt.Println(authId)
-	self.display()
+	this.display()
 }
 
 //列表
-func (self *RoleController) Table() {
+func (this *RoleController) Table() {
 	//列表
-	page, err := self.GetInt("page")
+	page, err := this.GetInt("page")
 	if err != nil {
 		page = 1
 	}
-	limit, err := self.GetInt("limit")
+	limit, err := this.GetInt("limit")
 	if err != nil {
 		limit = 30
 	}
@@ -70,49 +70,49 @@ func (self *RoleController) Table() {
 	filters["status"] = 1
 	result, count := (&servers.RoleServer{}).GetList(page, limit, filters)
 	list := (&servers.RoleServer{}).DealListData(result)
-	self.ajaxList("成功", MSG_OK, count, list)
+	this.ajaxList("成功", MSG_OK, count, list)
 }
 
 //新增或者更新真正保存
-func (self *RoleController) AjaxSave() {
-	role_id, _ := self.GetInt("id")
+func (this *RoleController) AjaxSave() {
+	role_id, _ := this.GetInt("id")
 	role := new(models.UcRoleModel)
 	if role_id != 0 {
 		role, _ = (&servers.RoleServer{}).GetById(role_id)
 	}
-	role.RoleName = strings.TrimSpace(self.GetString("role_name"))
-	role.Detail = strings.TrimSpace(self.GetString("detail"))
+	role.RoleName = strings.TrimSpace(this.GetString("role_name"))
+	role.Detail = strings.TrimSpace(this.GetString("detail"))
 	role.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 	role.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 	role.Status = 1
-	auths := strings.TrimSpace(self.GetString("nodes_data"))
+	auths := strings.TrimSpace(this.GetString("nodes_data"))
 
 	if role_id == 0 {
 		//新增
 		role.CreateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
-		role.CreateId = self.userId
+		role.CreateId = this.userId
 		if id, err := (&servers.RoleServer{}).Add(role); err != nil {
-			self.ajaxMsg(err.Error(), MSG_ERR)
+			this.ajaxMsg(err.Error(), MSG_ERR)
 		} else {
-			self.batchAddRoleAuth(auths, int(id))
+			this.batchAddRoleAuth(auths, int(id))
 		}
-		self.ajaxMsg("", MSG_OK)
+		this.ajaxMsg("", MSG_OK)
 	}
 
 	//修改
 	role.Id = role_id
 	if err := (&servers.RoleServer{}).Update(role); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	} else {
 		// 删除该角色权限
 		(&servers.RoleAuthServer{}).Delete(role_id)
-		self.batchAddRoleAuth(auths, role_id)
+		this.batchAddRoleAuth(auths, role_id)
 	}
-	self.ajaxMsg("", MSG_OK)
+	this.ajaxMsg("", MSG_OK)
 }
 
 //批量增加UcRoleAuthModel
-func (self *RoleController) batchAddRoleAuth(auths string, roleId int) {
+func (this *RoleController) batchAddRoleAuth(auths string, roleId int) {
 	ra := new(models.UcRoleAuthModel)
 	authsSlice := strings.Split(auths, ",")
 	for _, v := range authsSlice {
@@ -124,17 +124,17 @@ func (self *RoleController) batchAddRoleAuth(auths string, roleId int) {
 }
 
 //删除
-func (self *RoleController) AjaxDel() {
-	role_id, _ := self.GetInt("id")
+func (this *RoleController) AjaxDel() {
+	role_id, _ := this.GetInt("id")
 	role, _ := (&servers.RoleServer{}).GetById(role_id)
 	role.Status = 0
 	role.Id = role_id
 	role.UpdateTime = beego.DateFormat(time.Now(), "Y-m-d H:i:s")
 
 	if err := (&servers.RoleServer{}).Update(role); err != nil {
-		self.ajaxMsg(err.Error(), MSG_ERR)
+		this.ajaxMsg(err.Error(), MSG_ERR)
 	}
 	// 删除该角色权限
 	//models.RoleAuthDelete(role_id)
-	self.ajaxMsg("", MSG_OK)
+	this.ajaxMsg("", MSG_OK)
 }

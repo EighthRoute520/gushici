@@ -11,13 +11,13 @@ type HomeController struct {
 }
 
 //后台首页
-func (self *HomeController) Index() {
-	self.Data["pageTitle"] = "系统首页"
-	self.TplName = "public/main.html"
+func (this *HomeController) Index() {
+	this.Data["pageTitle"] = "系统首页"
+	this.TplName = "public/main.html"
 }
 
 //后台控制面板
-func (self *HomeController) Start() {
-	self.Data["pageTitle"] = "控制面板"
-	self.display()
+func (this *HomeController) Start() {
+	this.Data["pageTitle"] = "控制面板"
+	this.display()
 }
