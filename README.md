@@ -4,7 +4,7 @@
 安装方式建议可以参考官方，或者参考我的文档：https://blog.csdn.net/eighthroute/article/details/80318224  
 
 **2.安装 beego 框架 & bee 工具**  
-安装方式建议参考官方，或者参考我的文档：https://blog.csdn.net/eighthroute/article/details/80318224  
+安装方式建议参考官方，或者参考我的文档：https://blog.csdn.net/eighthroute/article/details/109708605
 
 **3.初始化数据库**  
 将根目录下 gushici.sql 导入到数据库中。  
