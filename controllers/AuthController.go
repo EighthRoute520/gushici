@@ -37,7 +37,11 @@ func (this *AuthController) GetNodes() {
 	filters["status"] = 1
 	result, count := (&servers.AuthServer{}).GetList(1, 1000, filters)
 	list := (&servers.AuthServer{}).DealListData(result)
-
+	for _, v := range list {
+		delete(v, "auth_url")
+		delete(v, "sort")
+		delete(v, "icon")
+	}
 	this.ajaxList("成功", MSG_OK, count, list)
 }
 

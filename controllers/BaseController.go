@@ -75,7 +75,7 @@ func (this *BaseController) auth() {
 			url := this.controllerName + "/" + this.actionName
 			//isHasAuth := strings.Contains(this.allowUrl, strings.ToLower(url))
 			isHasAuth := strings.Contains(this.allowUrl, url)
-			noAuth := "ajaxSave/ajaxDel/table/login/logout/getnodes/start/show/ajaxApiSave"
+			noAuth := "ajaxSave/ajaxDel/table/login/logout/getNodes/start/show/ajaxApiSave"
 			isNoAuth := strings.Contains(noAuth, this.actionName)
 			beego.Info(1111, url, this.allowUrl, isHasAuth, noAuth, isNoAuth)
 			if isHasAuth == false && isNoAuth == false {

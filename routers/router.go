@@ -32,8 +32,9 @@ func init() {
 
 	//注意：自动路由不能使用驼峰作为rootpath,应该优先使用明确意义的路由，提高可读性
 	//例如 ApiSourceController 不能使用自动路由找到 /apiSource/index 路由，他能找到 /apisource/index 路由
+	//同理：ApiMonitorController 不能使用自动路由找到 /apiMonitor/list 路由，他能找到 /apimonitor/list 路由,估需要明确指定
+	beego.Router("/apiMonitor/list", &controllers.ApiMonitorController{}, "*:List")
 	beego.AutoRouter(&controllers.ApiController{})
-	beego.AutoRouter(&controllers.ApiMonitorController{})
 	beego.AutoRouter(&controllers.EnvController{})
 	beego.AutoRouter(&controllers.CodeController{})
 	beego.AutoRouter(&controllers.IdiomController{})

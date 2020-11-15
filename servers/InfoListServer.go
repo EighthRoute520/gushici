@@ -8,6 +8,7 @@ package servers
 
 import (
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"gushici/models"
 	"math/rand"
@@ -58,7 +59,7 @@ func (this *InfoListServer) DealOneData(model *models.InfoListModel) map[string]
 		var r = rand.Intn(10)
 		model.PicUrl = "/uploads/image/rand" + fmt.Sprintf("%d", r) + ".jpeg"
 	}
-	row["picurl"] = model.PicUrl
+	row["pic_url"] = model.PicUrl
 	row["media"] = model.Media
 
 	if model.Desc != "" {
@@ -72,7 +73,7 @@ func (this *InfoListServer) DealOneData(model *models.InfoListModel) map[string]
 
 	row["linkurl"] = model.LinkUrl
 	row["author"] = model.Author
-
+	beego.Info(444444, row)
 	return row
 }
 
