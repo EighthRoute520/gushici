@@ -60,6 +60,7 @@ func (this *InfoListServer) DealOneData(model *models.InfoListModel) map[string]
 		model.PicUrl = "/uploads/image/rand" + fmt.Sprintf("%d", r) + ".jpeg"
 	}
 	row["pic_url"] = model.PicUrl
+	row["picurl"] = model.PicUrl
 	row["media"] = model.Media
 
 	if model.Desc != "" {
