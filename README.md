@@ -21,7 +21,19 @@
 -------
 > ``
  bee run
-``
+``   
+
+
+1).访问前台：http://localhost:8080/ 
+![图片说明](https://img-blog.csdnimg.cn/20201116163755241.png) 
+
+2).访问后台：http://localhost:8080/login （用户名/密码：admin/admin）  
+
+![图片说明](https://img-blog.csdnimg.cn/20201116163831941.png)  
+![图片说明](https://img-blog.csdnimg.cn/202011161638502.png)  
+
+3).代码组织：
+![图片说明](https://img-blog.csdnimg.cn/20201116163905630.png)  
 
 
 说明  
